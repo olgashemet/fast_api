@@ -19,3 +19,14 @@ pytest = "^7.2.1"
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
+
+
+[tool.pytest.ini_options]
+cache_dir = ".local/pytest/"
+console_output_style = "count"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+testpaths = [
+    "algo",
+]
