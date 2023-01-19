@@ -14,11 +14,64 @@ python = "^3.10"
 
 
 [tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+flake8 = "^6.0.0"
+ipython = "^8.8.0"
+isort = "^5.11.4"
+mypy = "^0.991"
 pytest = "^7.2.1"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
+
+
+[tool.black]
+line-length = 79
+target-version = ["py310"]
+include = '^.+\.pyi?$'
+extend-exclude = '''
+(
+    .*\.local.*
+    | .*\.venv.*
+)
+'''
+
+
+[tool.isort]
+force_single_line = true
+line_length = 79
+multi_line_output = 3
+profile = "black"
+skip = [
+    ".local",
+    ".venv",
+]
+
+
+[tool.mypy]
+cache_dir = ".local/mypy/"
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+exclude = [
+    ".github",
+    ".idea",
+    ".local",
+    ".venv",
+    ".vscode",
+]
+files = ["algo"]
+no_implicit_optional = true
+pretty = true
+python_version = "3.10"
+show_error_context = true
+sqlite_cache = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
 
 [tool.pytest.ini_options]
