@@ -1,0 +1,21 @@
+[tool.poetry]
+authors = ["Your Name <you@example.com>"]
+description = ""
+name = "fast-api"
+packages = []
+readme = "README.md"
+version = "0.1.0"
+
+
+[tool.poetry.dependencies]
+anyio = "^3.6.2"
+fastapi = "^0.89.1"
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.1"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
