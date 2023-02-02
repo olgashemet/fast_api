@@ -22,6 +22,12 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
+    def insert(self, index: int, obj: Any) -> None:
+        pass
+
+    def index(self, value: Any) -> int:
+        pass
+
     def to_list(self) -> list:
         result = []
 
