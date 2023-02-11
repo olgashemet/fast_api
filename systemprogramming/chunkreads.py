@@ -12,7 +12,7 @@ def read_chunks(stream: IO) -> None:
     for i in count(1):
         lines = (stream.readline() for _ in range(CHUNK_SIZE))
         lines_stripped = (line.strip() for line in lines)
-        lines_nonempty = [ line for line in lines_stripped if line]
+        lines_nonempty = [line for line in lines_stripped if line]
 
         if not lines_nonempty:
             break
@@ -41,5 +41,5 @@ def bench():
         read_chunks(stream)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     bench()
