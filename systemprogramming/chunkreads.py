@@ -12,7 +12,7 @@ def read_chunks(stream: IO) -> None:
     for i in count(1):
         lines = (stream.readline() for _ in range(CHUNK_SIZE))
         lines_stripped = (line.strip() for line in lines)
-        lines_nonempty = [line for line in lines_stripped if line]
+        lines_nonempty = [ line for line in lines_stripped if line]
 
         if not lines_nonempty:
             break
@@ -20,7 +20,7 @@ def read_chunks(stream: IO) -> None:
         buffer = StringIO()
         buffer.writelines(lines_nonempty)
         buffer.seek(0)
-        print(f"copy to db: {i=}, {len(lines_nonempty)=}")  # noqa: T201
+        print(f"copy to db: {i=}, {len(lines_nonempty)=}")
 
 
 def write_initial(stream: IO, sz: int = 100) -> None:
@@ -28,10 +28,9 @@ def write_initial(stream: IO, sz: int = 100) -> None:
         stream.write(f"{i}\n")
 
 
-def bench() -> None:
+def bench():
     # todo: physical file
-    # todo: use StringIO
-    #       when size(path) <= 0.1 * psutil.virtual_memory().available
+    # todo: use StringIO when size(path) <= 0.1 * psutil.virtual_memory().available
     # todo: physical file size: path.stat().st_size
     path = Path("./xxx.txt")
 
@@ -42,5 +41,5 @@ def bench() -> None:
         read_chunks(stream)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     bench()

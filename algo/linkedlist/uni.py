@@ -8,7 +8,7 @@ from typing import final
 @dataclasses.dataclass(slots=True)
 class Node:
     value: Any
-    next: Optional["Node"] = None  # noqa: A003,VNE003
+    next: Optional["Node"] = None
 
 
 class UniDirectionalLinkedList:
@@ -22,35 +22,34 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
-    # todo: __getitem__
-    # todo: __setitem__
-    # todo: __delitem__
-    def insert(
-        self, index: int, obj: Any
-    ) -> Any:  # fixme: rename to __setitem__
-        # todo: if index out of range: raise IndexError
+    def insert(self, index: int, obj: Any) -> None:
+
         current = self._head
         if index == 0:
-            current.value = obj  # type: ignore
+            current.value=obj
         else:
-            for _i in range(index):
-                node_next = current.next  # type: ignore
+            for i in range(index):
+                node_next=current.next
                 if node_next is not None:
-                    current = node_next
-                else:
-                    return self._head
-            current.value = obj  # type: ignore
+                    current=node_next
+                else: return self._head
+            current.value = obj
 
-    def index(self, value: Any) -> Any:
+
+    def index(self, value: Any) -> int:
         current = self._head
-        for i in range(value + 1):
+        for i in range(value +1):
             if i == value:
-                result = current.value  # type: ignore
-            else:
-                current = current.next  # type: ignore
+                result = current.value
+            else: current = current.next
             if not current:
-                raise Exception("out of scope")  # todo: ValueError
+                raise Exception('out of scope')
         return result
+
+
+
+
+
 
     def to_list(self) -> list:
         result = []
@@ -67,7 +66,7 @@ class UniDirectionalLinkedList:
         current = self._head
 
         while current:
-            next = current.next  # noqa: A001,VNE003
+            next = current.next
             if not next:
                 return current
             current = next
