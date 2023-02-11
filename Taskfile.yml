@@ -1,0 +1,108 @@
+version: '3'
+
+output: 'prefixed'
+
+tasks:
+  code-format:
+    cmds:
+      - poetry run black .
+      - poetry run isort --virtual-env="{{.DIR_VENV}}" .
+    desc: formats code using black & isort
+    dir: "{{.USER_WORKING_DIR}}"
+
+  code-lint:
+    cmds:
+      - echo 'all linters passed'
+    deps:
+      - code-lint-black
+      - code-lint-isort
+      - code-lint-mypy
+      - code-lint-flake8
+    desc: checks code against linters
+    dir: "{{.USER_WORKING_DIR}}"
+    silent: true
+
+  run-tests-coverage:
+    cmds:
+      - poetry run coverage html
+    deps:
+      - run-tests
+    desc: run tests with coverage
+    dir: "{{.ROOT_DIR}}"
+    generates:
+      - "{{.DIR_LOCAL}}/coverage/html/**/*"
+    run: once
+
+  run-tests:
+    cmds:
+      - poetry run pytest .
+    desc: runs tests
+    dir: "{{.USER_WORKING_DIR}}"
+    run: once
+
+  code-lint-black:
+    cmds:
+      - poetry run black --check .
+    dir: "{{.USER_WORKING_DIR}}"
+    internal: true
+  code-lint-isort:
+    cmds:
+      - poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
+    dir: "{{.USER_WORKING_DIR}}"
+    internal: true
+  code-lint-mypy:
+    cmds:
+      - poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
+    dir: "{{.USER_WORKING_DIR}}"
+    internal: true
+  code-lint-flake8:
+    cmds:
+      - poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
+    dir: "{{.USER_WORKING_DIR}}"
+    internal: true
+
+  build-task-github:
+    cmds:
+      - >
+        docker run --rm -it
+        -v $(pwd):/app/:rw
+        -e GOBIN=/app/.github/bin
+        golang:bullseye@sha256:a0b51fe882f269828b63e7f69e6925f85afc548cf7cf967ecbfbcce6afe6f235
+        go install github.com/go-task/task/v3/cmd/task@latest
+    desc: builds Task binary for Ubuntu / Github Actions
+    dir: "{{.ROOT_DIR}}"
+
+  install-poetry:
+    cmds:
+      - pip install --upgrade pip
+      - pip install --ignore-installed poetry=="{{.POETRY_VERSION}}"
+    desc: Installs Poetry to the current Python environment.
+    dir: "{{.ROOT_DIR}}"
+
+  default:
+    cmds:
+      - pyenv install --skip-existing "{{.PYTHON_VERSION}}"
+      - task: install-poetry
+      - poetry env use "{{.PYTHON_VERSION}}"
+      - poetry install --with dev
+      - echo "ROOT_DIR={{.ROOT_DIR}}"
+      - echo "USER_WORKING_DIR={{.USER_WORKING_DIR}}"
+      - echo "DIR_VENV={{.DIR_VENV}}"
+      - echo "DIR_LOCAL={{.DIR_LOCAL}}"
+      - echo "PYTHON_VERSION={{.PYTHON_VERSION}}"
+      - echo "POETRY_VERSION={{.POETRY_VERSION}}"
+    desc: bootstraps local dev environment
+    dir: "{{.ROOT_DIR}}"
+
+vars:
+  DIR_LOCAL:
+    sh: (cd "{{.ROOT_DIR}}"/.local && pwd)
+  DIR_VENV:
+    sh: (cd "{{.ROOT_DIR}}"/"$(poetry env info --path)" && pwd)
+  PYTHON_VERSION:
+    sh: cat .python-version
+  POETRY_VERSION:
+    sh: cat .poetry-version
+
+env:
+  PYTHONPATH: "{{.ROOT_DIR}}"

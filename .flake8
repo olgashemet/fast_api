@@ -1,0 +1,13 @@
+[flake8]
+exclude =
+    .git
+    .github
+    .idea
+    .local
+    .run
+    .venv
+    .vscode
+    venv
+ignore = B101,S101,W503
+max_annotations_complexity = 4
+max_cognitive_complexity = 12
