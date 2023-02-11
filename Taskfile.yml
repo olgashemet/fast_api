@@ -12,6 +12,10 @@ tasks:
 
   code-lint:
     cmds:
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-black"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-flake8"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-isort"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-mypy"
       - echo 'all linters passed'
     deps:
       - code-lint-black
@@ -20,7 +24,6 @@ tasks:
       - code-lint-flake8
     desc: checks code against linters
     dir: "{{.USER_WORKING_DIR}}"
-    silent: true
 
   run-tests-coverage:
     cmds:
@@ -42,23 +45,39 @@ tasks:
 
   code-lint-black:
     cmds:
-      - poetry run black --check .
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run black --check .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
     dir: "{{.USER_WORKING_DIR}}"
+    ignore_error: true
     internal: true
   code-lint-isort:
     cmds:
-      - poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
     dir: "{{.USER_WORKING_DIR}}"
+    ignore_error: true
     internal: true
   code-lint-mypy:
     cmds:
-      - poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
+      - > 
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
     dir: "{{.USER_WORKING_DIR}}"
+    ignore_error: true
     internal: true
   code-lint-flake8:
     cmds:
-      - poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
     dir: "{{.USER_WORKING_DIR}}"
+    ignore_error: true
     internal: true
 
   build-task-github:
