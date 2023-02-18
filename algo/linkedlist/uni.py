@@ -23,28 +23,38 @@ class UniDirectionalLinkedList:
             self._head = new_node
 
     def insert(self, index: int, obj: Any) -> None:
+        new_node = Node(obj)
         current = self._head
         if index == 0:
-            current.value = obj
+            new_node.next = self._head
+            self._head = new_node
         else:
-            for i in range(index):
-                node_next = current.next
-                if node_next is not None:
-                    current = node_next
+            for i in range(index - 1):
+                if current:
+                    node_next = current.next
+                    if node_next is not None:
+                        current = node_next
+                    else:
+                        raise ValueError("index beyond list")
                 else:
-                    return self._head
-            current.value = obj
+                    raise ValueError("current is none")
+            if current:
+                new_node.next = current.next
+                current.next = new_node
 
     def index(self, value: Any) -> int:
         current = self._head
-        for i in range(value + 1):
-            if i == value:
-                result = current.value
+        if not current:
+            raise ValueError("empty list")
+        index = 0
+        while current:
+            if current.value == value:
+                return index
             else:
                 current = current.next
-            if not current:
-                raise Exception("out of scope")
-        return result
+                index = index + 1
+        raise ValueError("no values available in the list")
+
 
     def to_list(self) -> list:
         result = []
