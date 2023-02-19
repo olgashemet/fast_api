@@ -55,7 +55,6 @@ class UniDirectionalLinkedList:
                 index = index + 1
         raise ValueError("no values available in the list")
 
-
     def to_list(self) -> list:
         result = []
 
@@ -77,3 +76,31 @@ class UniDirectionalLinkedList:
             current = next
 
         return current
+
+    def __getitem__(self, index: int) -> None:
+        if isinstance(index, int) and (index >= 0):
+            current = self._head
+            if current:
+                for i in range(index):
+                    if current.next:
+                        current = current.next
+                    else:
+                        raise IndexError("list index ou of the range")
+                return current.value
+            else:
+                raise ValueError("empty linked list")
+        else:
+            raise TypeError("not valid index")
+
+    def __setitem__(self, key, value):
+        if isinstance(key, int) and (key >= 0):
+            current = self._head
+            if current:
+                for i in range(key):
+                    if current.next:
+                        current = current.next
+                    else:
+                        raise IndexError("list index ou of the range")
+                current.value=value
+        else:
+            raise TypeError("not valid index")
