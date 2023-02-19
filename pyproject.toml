@@ -8,7 +8,7 @@ version = "0.1.0"
 
 
 [[tool.poetry.source]]
-name = "pypi"
+name = "pypi-explicit"
 url = "https://pypi.org/simple/"
 default = true
 
