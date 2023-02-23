@@ -42,7 +42,7 @@ class UniDirectionalLinkedList:
                 new_node.next = current.next
                 current.next = new_node
 
-    def index(self, value: Any) -> int:
+    def index(self, value: Any) -> Any:
         current = self._head
         if not current:
             raise ValueError("empty list")
@@ -77,7 +77,7 @@ class UniDirectionalLinkedList:
 
         return current
 
-    def __getitem__(self, index: int) -> None:
+    def __getitem__(self, index: Any) -> Any:
         if isinstance(index, int) and (index >= 0):
             current = self._head
             if current:
@@ -92,7 +92,7 @@ class UniDirectionalLinkedList:
         else:
             raise TypeError("not valid index")
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: int, value: Any) -> None:
         if isinstance(key, int) and (key >= 0):
             current = self._head
             if current:
@@ -101,6 +101,25 @@ class UniDirectionalLinkedList:
                         current = current.next
                     else:
                         raise IndexError("list index ou of the range")
-                current.value=value
+                current.value = value
         else:
             raise TypeError("not valid index")
+
+    def __delitem__(self, key: int) -> None:
+        if not isinstance(key, int) or (key < 0):
+            raise TypeError("not valid index")
+        else:
+            if key == 0 and self._head:
+                self._head = self._head.next
+            else:
+                if self._head:
+                    current = self._head
+                    for i in range(key - 1):
+                        if current.next is not None:
+                            current = current.next
+                        else:
+                            raise IndexError("list index ou of the range")
+                    if current.next:
+                        current.next = current.next.next
+                else:
+                    raise ValueError("empty list")

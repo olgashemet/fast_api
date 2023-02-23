@@ -1,3 +1,5 @@
+import pytest
+
 from algo.linkedlist.uni import UniDirectionalLinkedList
 
 
@@ -29,15 +31,13 @@ def test_insert_first() -> None:
 
 def test_insert_beyond_limit() -> None:
     ul = UniDirectionalLinkedList()
-    try:
+    with pytest.raises(ValueError):
         ul.insert(100, "python100")
-    except ValueError:
-        "index beyond list"
-        pass
 
 
 def test_insert_second() -> None:
     ul = UniDirectionalLinkedList()
+
     # insert as a second-last  node
     ul.append(1)
     ul.append(2)
@@ -45,6 +45,7 @@ def test_insert_second() -> None:
     assert ul.to_list() == [1, "olga", 2]
 
     ul.append("123")
+
     ul.insert(1, "python")
     assert ul.to_list() == [1, "python", "olga", 2, "123"]
 
@@ -54,15 +55,11 @@ def test_index() -> None:
     ul = UniDirectionalLinkedList()
 
     ul.append("123")
-    prime_numbers = [2, 3, 5, 7]
     assert ul.index("123") == 0
 
     # test if value is not available in the list
-    try:
+    with pytest.raises(ValueError):
         ul.index("1236")
-    except ValueError:
-        "no values available in the list"
-        pass
 
     # test if value is  available in the list
     ul.append("1234")
@@ -71,18 +68,8 @@ def test_index() -> None:
 
 def test__getitem__() -> None:
     ul = UniDirectionalLinkedList()
-
-    try:
+    with pytest.raises(TypeError):
         ul.__getitem__(-1.5)
-    except TypeError:
-        "not valid index"
-        pass
-
-    try:
-        ul.__getitem__(0)
-    except ValueError:
-        "empty linked list"
-        pass
 
     ul.append("123")
     assert ul.__getitem__(0) == "123"
@@ -90,11 +77,8 @@ def test__getitem__() -> None:
     ul.append("1234")
     assert ul.__getitem__(1) == "1234"
 
-    try:
+    with pytest.raises(IndexError):
         ul.__getitem__(2)
-    except IndexError:
-        "list index ou of the range"
-        pass
 
 
 def test__setitem__() -> None:
@@ -105,14 +89,43 @@ def test__setitem__() -> None:
     ul.__setitem__(1, "olga")
     assert ul.to_list() == [1, "olga", 3]
 
-    try:
-        ul.__getitem__(-1.5, "new value")
-    except TypeError:
-        "not valid index"
-        pass
+    with pytest.raises(TypeError):
+        ul.__getitem__(-1.5)
 
-    ul.__setitem__(5, "new value")
-    assert ul.to_list() == [1, "olga", 3]
+    with pytest.raises(IndexError):
+        ul.__setitem__(5, "new value")
+
+
+def test__delitem__() -> None:
+    ul = UniDirectionalLinkedList()
+    ul.append(1)
+    ul.append(2)
+    ul.append(3)
+    ul.append(4)
+
+    ul.__delitem__(4)
+    assert ul.to_list() == [1, 2, 3, 4]
+
+    ul.__delitem__(3)
+    assert ul.to_list() == [1, 2, 3]
+
+    with pytest.raises(TypeError):
+        ul.__delitem__(-5)
+
+    with pytest.raises(IndexError):
+        ul.__delitem__(20)
+
+    ul.__delitem__(1)
+    assert ul.to_list() == [1, 3]
+
+    ul.__delitem__(0)
+    assert ul.to_list() == [3]
+
+    ul.__delitem__(0)
+    assert ul.to_list() == []
+
+    with pytest.raises(ValueError):
+        ul.__delitem__(0)
 
 
 if __name__ == "__main__":
@@ -124,3 +137,4 @@ if __name__ == "__main__":
     test_index()
     test__getitem__()
     test__setitem__()
+    test__delitem__()

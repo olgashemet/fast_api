@@ -8,7 +8,7 @@ tasks:
       - poetry run black .
       - poetry run isort --virtual-env="{{.DIR_VENV}}" .
     desc: formats code using black & isort
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
 
   code-lint:
     cmds:
@@ -23,7 +23,7 @@ tasks:
       - code-lint-mypy
       - code-lint-flake8
     desc: checks code against linters
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
 
   run-tests-coverage:
     cmds:
@@ -40,7 +40,7 @@ tasks:
     cmds:
       - poetry run pytest .
     desc: runs tests
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
     run: once
 
   code-lint-black:
@@ -49,7 +49,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run black --check .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
     ignore_error: true
     internal: true
   code-lint-isort:
@@ -58,7 +58,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
     ignore_error: true
     internal: true
   code-lint-mypy:
@@ -67,7 +67,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
     ignore_error: true
     internal: true
   code-lint-flake8:
@@ -76,7 +76,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.USER_WORKING_DIR}}/algo"
     ignore_error: true
     internal: true
 
