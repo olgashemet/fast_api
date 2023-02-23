@@ -8,7 +8,7 @@ tasks:
       - poetry run black .
       - poetry run isort --virtual-env="{{.DIR_VENV}}" .
     desc: formats code using black & isort
-    dir: "{{.USER_WORKING_DIR}}/algo"
+    dir: "{{.USER_WORKING_DIR}}"
 
   code-lint:
     cmds:
@@ -23,11 +23,11 @@ tasks:
       - code-lint-mypy
       - code-lint-flake8
     desc: checks code against linters
-    dir: "{{.USER_WORKING_DIR}}/algo"
+    dir: "{{.USER_WORKING_DIR}}"
 
   run-tests-coverage:
     cmds:
-      - poetry run coverage html
+      - poetry run coverage run -m pytest
     deps:
       - run-tests
     desc: run tests with coverage
