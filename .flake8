@@ -7,6 +7,7 @@ exclude =
     .run
     .venv
     .vscode
+    systemprogramming
     venv
 ignore = B101,S101,W503
 max_annotations_complexity = 4
