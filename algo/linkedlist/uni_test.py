@@ -79,7 +79,8 @@ def test_index() -> None:
 def test__getitem__() -> None:
     ul = UniDirectionalLinkedList()
     with pytest.raises(TypeError):
-        ul.__getitem__(-1.5)
+        # ul.__getitem__(-1.5)
+        ul[-1.5]
 
     ul.append("123")
     assert ul.__getitem__(0) == "123"
@@ -96,7 +97,8 @@ def test__setitem__() -> None:
     ul.append(1)
     ul.append(2)
     ul.append(3)
-    ul.__setitem__(1, "olga")
+
+    ul[1] = "olga"
     assert ul.to_list() == [1, "olga", 3]
 
     with pytest.raises(TypeError):
