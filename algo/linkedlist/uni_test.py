@@ -31,8 +31,14 @@ def test_insert_first() -> None:
 
 def test_insert_beyond_limit() -> None:
     ul = UniDirectionalLinkedList()
-    with pytest.raises(ValueError):
+
+    with pytest.raises(ValueError) as excinfo:
         ul.insert(100, "python100")
+    assert str(excinfo.value) == "current is none"
+
+    with pytest.raises(ValueError) as excinfo:
+        ul.insert(2, "1")
+    assert str(excinfo.value) == "current is none"
 
 
 def test_insert_second() -> None:
@@ -48,6 +54,10 @@ def test_insert_second() -> None:
 
     ul.insert(1, "python")
     assert ul.to_list() == [1, "python", "olga", 2, "123"]
+
+    with pytest.raises(ValueError) as excinfo:
+        ul.insert(100, "end")
+    assert str(excinfo.value) == "index beyond list"
 
 
 def test_index() -> None:
@@ -126,12 +136,6 @@ def test__delitem__() -> None:
 
     with pytest.raises(ValueError):
         ul.__delitem__(0)
-
-    xxx()
-
-
-def xxx():
-    pass
 
 
 if __name__ == "__main__":
