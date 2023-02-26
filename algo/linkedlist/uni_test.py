@@ -127,6 +127,12 @@ def test__delitem__() -> None:
     with pytest.raises(ValueError):
         ul.__delitem__(0)
 
+    xxx()
+
+
+def xxx():
+    pass
+
 
 if __name__ == "__main__":
     test_uni_create()

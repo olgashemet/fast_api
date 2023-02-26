@@ -128,6 +128,7 @@ warn_unused_ignores = true
 
 
 [tool.pytest.ini_options]
+addopts = "--cov --cov-branch --no-cov-on-fail --cov-fail-under=90"
 cache_dir = ".local/pytest/"
 console_output_style = "count"
 filterwarnings = [
