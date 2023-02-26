@@ -8,7 +8,7 @@ from typing import final
 @dataclasses.dataclass(slots=True)
 class Node:
     value: Any
-    next: Optional["Node"] = None
+    next: Optional["Node"] = None  # noqa: A003,VNE003
 
 
 class UniDirectionalLinkedList:
@@ -22,7 +22,7 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
-    def insert(self, index: int, obj: Any) -> None:
+    def insert(self, index: int, obj: Any) -> None:  # noqa: CCR001
         new_node = Node(obj)
         current = self._head
         if index == 0:
