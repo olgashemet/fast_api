@@ -52,6 +52,7 @@ class UniDirectionalLinkedList:
             else:
                 current = current.next
                 index = index + 1
+
         raise ValueError("no values available in the list")
 
     def to_list(self) -> list:
@@ -125,8 +126,8 @@ class UniDirectionalLinkedList:
 
     def __len__(self) -> int:
         current = self._head
-        l = 0
+        length_list = 0
         while current:
-            l = l + 1
+            length_list = length_list + 1
             current = current.next
-        return l
+        return length_list
