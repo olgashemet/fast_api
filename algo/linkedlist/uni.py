@@ -27,7 +27,7 @@ class UniDirectionalLinkedList:
         current = self._head
         if isinstance(index, int) and (index >= 0):
             if index == 0 or current is None:
-                new_node.next = self._head
+                new_node.next = current
                 self._head = new_node
             else:
                 for _i in range(index - 1):
@@ -40,19 +40,20 @@ class UniDirectionalLinkedList:
         else:
             raise IndexError("not valid index")
 
-    def index(self, value: Any) -> Any:
+    def index(self, value: Any) -> Any:  # noqa: CCR001
         current = self._head
         if not current:
             raise ValueError("empty list")
-        index = 0
-        while current:
-            if current.value == value:
-                return index
-            else:
-                current = current.next
-                index = index + 1
+        else:
+            index = 0
+            while current:
+                if current.value == value:
+                    return index
+                else:
+                    current = current.next
+                    index = index + 1
 
-        raise ValueError("no values available in the list")
+            raise ValueError("no values available in the list")
 
     def to_list(self) -> list:
         result = []

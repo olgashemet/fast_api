@@ -45,11 +45,11 @@ def test_insert_beyond_limit() -> None:
 
     with pytest.raises(IndexError) as excinfo:
         ul.insert(-1, "python100")
-    assert str(excinfo.value) == "not valid index"
-    #
+    assert "not valid index" in str(excinfo.value)
+
     with pytest.raises(IndexError) as excinfo:
         ul.insert(1.5, "python100")
-    assert str(excinfo.value) == "not valid index"
+    assert "not valid index" in str(excinfo.value)
 
 
 def test_index() -> None:
@@ -60,8 +60,9 @@ def test_index() -> None:
     assert ul.index("123") == 0
 
     # test if value is not available in the list
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as excinfo:
         ul.index("1236")
+    assert "no values available in the list" in str(excinfo.value)
 
     # test if value is  available in the list
     ul.append("1234")
@@ -131,11 +132,12 @@ def test__delitem__() -> None:
         ul.__delitem__(0)
 
 
-def test_len() -> None:
+def test__len__() -> None:
     ul = UniDirectionalLinkedList()
-    assert ul.__len__() == 0
+    assert len(ul) == 0
+
     ul.append(1)
-    assert ul.__len__() == 1
+    assert len(ul) == 1
 
 
 if __name__ == "__main__":
@@ -147,4 +149,4 @@ if __name__ == "__main__":
     test__getitem__()
     test__setitem__()
     test__delitem__()
-    test_len()
+    test__len__()
