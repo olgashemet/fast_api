@@ -22,11 +22,24 @@ def test_uni_append() -> None:
     assert ul.to_list() == [1, "2", [3]]
 
 
-def test_insert_first() -> None:
+@pytest.mark.parametrize(
+    "list_class", [
+        list,
+        UniDirectionalLinkedList,
+    ]
+)
+def test_insert_first(list_class) -> None:
     # insert as a first  node
-    ul = UniDirectionalLinkedList()
-    ul.insert(0, "123")
-    assert ul.to_list() == ["123"]
+    li = list_class()
+
+    li.insert(0, "123")
+    assert li == ["123"]
+
+    li.insert(0, "456")
+    assert li == ["456", "123"]
+
+    # li.insert(-1, "789")
+    # assert li == ["456", "789", "123"]
 
 
 def test_insert_beyond_limit() -> None:
@@ -138,6 +151,20 @@ def test__len__() -> None:
 
     ul.append(1)
     assert len(ul) == 1
+
+
+@pytest.mark.parametrize(
+    "list_class", [
+        list,
+        UniDirectionalLinkedList,
+    ]
+)
+def test__equal__(list_class) -> None:
+    li = list_class()
+
+    assert [] == li
+    assert li == []
+    assert li == li
 
 
 if __name__ == "__main__":

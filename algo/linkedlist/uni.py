@@ -23,6 +23,10 @@ class UniDirectionalLinkedList:
             self._head = new_node
 
     def insert(self, index: Any, obj: Any) -> None:  # noqa: CCR001
+        """
+        Inserts object before index
+        """
+
         new_node = Node(obj)
         current = self._head
         if isinstance(index, int) and (index >= 0):
@@ -42,20 +46,17 @@ class UniDirectionalLinkedList:
 
     def index(self, value: Any) -> Any:  # noqa: CCR001
         current = self._head
-        if not current:
-            raise ValueError("empty list")
-        else:
-            index = 0
-            while current:
-                if current.value == value:
-                    return index
-                else:
-                    current = current.next
-                    index = index + 1
+        index = 0
+        while current:
+            if current.value == value:
+                return index
+            else:
+                current = current.next
+                index = index + 1
 
-            raise ValueError("no values available in the list")
+        raise ValueError("no values available in the list")
 
-    def to_list(self) -> list:
+    def _to_list(self) -> list:
         result = []
 
         current = self._head
@@ -131,3 +132,8 @@ class UniDirectionalLinkedList:
             length_list = length_list + 1
             current = current.next
         return length_list
+
+    def __eq__(self, another: Any) -> bool:
+        if not isinstance(another, UniDirectionalLinkedList | list):
+            return NotImplemented
+        return self._to_list() == another
