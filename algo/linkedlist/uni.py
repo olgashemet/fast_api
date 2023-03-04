@@ -40,7 +40,6 @@ class UniDirectionalLinkedList:
         else:
             raise IndexError("not valid index")
 
-
     def index(self, value: Any) -> Any:
         current = self._head
         if not current:
