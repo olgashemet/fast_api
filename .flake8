@@ -1,5 +1,4 @@
 [flake8]
-ignore = BLK100
 exclude =
     .git
     .github
@@ -10,6 +9,6 @@ exclude =
     .vscode
     systemprogramming
     venv
-ignore = B101,S101,W503
+ignore = B101,S101,W503,BLK100
 max_annotations_complexity = 4
 max_cognitive_complexity = 12
