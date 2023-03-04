@@ -77,7 +77,7 @@ class UniDirectionalLinkedList:
 
         return current
 
-    def __getitem__(self, index: Any) -> Any:
+    def __getitem__(self, index: Any) -> Any: # noqa: CCR001
         if isinstance(index, int) and (index >= 0):
             current = self._head
             if current:
@@ -92,7 +92,7 @@ class UniDirectionalLinkedList:
         else:
             raise TypeError("not valid index")
 
-    def __setitem__(self, key: int, value: Any) -> None:
+    def __setitem__(self, key: int, value: Any) -> None: # noqa: CCR001
         if isinstance(key, int) and (key >= 0):
             current = self._head
             if current:
@@ -105,7 +105,7 @@ class UniDirectionalLinkedList:
         else:
             raise TypeError("not valid index")
 
-    def __delitem__(self, key: int) -> None:
+    def __delitem__(self, key: int) -> None: # noqa: CCR001
         if not isinstance(key, int) or (key < 0):
             raise TypeError("not valid index")
         else:
