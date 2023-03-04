@@ -31,34 +31,25 @@ def test_insert_first() -> None:
 
 def test_insert_beyond_limit() -> None:
     ul = UniDirectionalLinkedList()
+    ul.insert(1000, "test")
+    assert ul.to_list() == ["test"]
 
-    with pytest.raises(ValueError) as excinfo:
-        ul.insert(100, "python100")
-    assert str(excinfo.value) == "current is none"
+    ul.insert(0, "0_test")
+    assert ul.to_list() == ["0_test", "test"]
 
-    with pytest.raises(ValueError) as excinfo:
-        ul.insert(2, "1")
-    assert str(excinfo.value) == "current is none"
+    ul.insert(1, "1234")
+    assert ul.to_list() == ["0_test", "1234", "test"]
 
+    ul.insert(1000000, "1000000")
+    assert ul.to_list() == ["0_test", "1234", "test", "1000000"]
 
-def test_insert_second() -> None:
-    ul = UniDirectionalLinkedList()
-
-    # insert as a second-last  node
-    ul.append(1)
-    ul.append(2)
-    ul.insert(1, "olga")
-    assert ul.to_list() == [1, "olga", 2]
-
-    ul.append("123")
-
-    ul.insert(1, "python")
-    assert ul.to_list() == [1, "python", "olga", 2, "123"]
-
-    with pytest.raises(ValueError) as excinfo:
-        ul.insert(100, "end")
-    assert str(excinfo.value) == "index beyond list"
-
+    with pytest.raises(IndexError) as excinfo:
+        ul.insert(-1, "python100")
+    assert str(excinfo.value) == "not valid index"
+    #
+    with pytest.raises(IndexError) as excinfo:
+        ul.insert(1.5, "python100")
+    assert str(excinfo.value) == "not valid index"
 
 def test_index() -> None:
     # test if value is  available in the list
@@ -79,17 +70,16 @@ def test_index() -> None:
 def test__getitem__() -> None:
     ul = UniDirectionalLinkedList()
     with pytest.raises(TypeError):
-        # ul.__getitem__(-1.5)
         ul[-1.5]
 
     ul.append("123")
-    assert ul.__getitem__(0) == "123"
+    assert ul[0] == "123"
 
     ul.append("1234")
-    assert ul.__getitem__(1) == "1234"
+    assert ul[1] == "1234"
 
     with pytest.raises(IndexError):
-        ul.__getitem__(2)
+        ul[2]
 
 
 def test__setitem__() -> None:
@@ -102,10 +92,10 @@ def test__setitem__() -> None:
     assert ul.to_list() == [1, "olga", 3]
 
     with pytest.raises(TypeError):
-        ul.__getitem__(-1.5)
+        ul[-1.5]
 
     with pytest.raises(IndexError):
-        ul.__setitem__(5, "new value")
+        ul[5] = "new value"
 
 
 def test__delitem__() -> None:
@@ -140,13 +130,20 @@ def test__delitem__() -> None:
         ul.__delitem__(0)
 
 
+def test_len() -> None:
+    ul = UniDirectionalLinkedList()
+    assert ul.__len__() == 0
+    ul.append(1)
+    assert ul.__len__() == 1
+
+
 if __name__ == "__main__":
     test_uni_create()
     test_uni_append()
     test_insert_first()
     test_insert_beyond_limit()
-    test_insert_second()
     test_index()
     test__getitem__()
     test__setitem__()
     test__delitem__()
+    test_len()

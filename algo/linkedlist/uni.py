@@ -22,25 +22,24 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
-    def insert(self, index: int, obj: Any) -> None:  # noqa: CCR001
+    def insert(self, index: Any, obj: Any) -> None:  # noqa: CCR001
         new_node = Node(obj)
         current = self._head
-        if index == 0:
-            new_node.next = self._head
-            self._head = new_node
-        else:
-            for i in range(index - 1):
-                if current:
-                    node_next = current.next
-                    if node_next is not None:
-                        current = node_next
+        if isinstance(index, int) and (index >= 0):
+            if index == 0 or current is None:
+                new_node.next = self._head
+                self._head = new_node
+            else:
+                for _i in range(index - 1):
+                    if current.next is not None:
+                        current = current.next
                     else:
-                        raise ValueError("index beyond list")
-                else:
-                    raise ValueError("current is none")
-            if current:
+                        break
                 new_node.next = current.next
                 current.next = new_node
+        else:
+            raise IndexError("not valid index")
+
 
     def index(self, value: Any) -> Any:
         current = self._head
@@ -70,10 +69,10 @@ class UniDirectionalLinkedList:
         current = self._head
 
         while current:
-            next = current.next
-            if not next:
+            next_node = current.next
+            if not next_node:
                 return current
-            current = next
+            current = next_node
 
         return current
 
@@ -81,7 +80,7 @@ class UniDirectionalLinkedList:
         if isinstance(index, int) and (index >= 0):
             current = self._head
             if current:
-                for i in range(index):
+                for _i in range(index):
                     if current.next:
                         current = current.next
                     else:
@@ -96,7 +95,7 @@ class UniDirectionalLinkedList:
         if isinstance(key, int) and (key >= 0):
             current = self._head
             if current:
-                for i in range(key):
+                for _i in range(key):
                     if current.next:
                         current = current.next
                     else:
@@ -114,7 +113,7 @@ class UniDirectionalLinkedList:
             else:
                 if self._head:
                     current = self._head
-                    for i in range(key - 1):
+                    for _i in range(key - 1):
                         if current.next is not None:
                             current = current.next
                         else:
@@ -123,3 +122,11 @@ class UniDirectionalLinkedList:
                         current.next = current.next.next
                 else:
                     raise ValueError("empty list")
+
+    def __len__(self) -> int:
+        current = self._head
+        l = 0
+        while current:
+            l = l + 1
+            current = current.next
+        return l
