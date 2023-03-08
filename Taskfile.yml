@@ -94,8 +94,8 @@ tasks:
 
   install-poetry:
     cmds:
-      - pip install --upgrade pip
-      - pip install --ignore-installed poetry=="{{.POETRY_VERSION}}"
+      - pip install -i https://pypi.org/simple --upgrade pip
+      - pip install -i https://pypi.org/simple --ignore-installed poetry=="{{.POETRY_VERSION}}"
     desc: Installs Poetry to the current Python environment.
     dir: "{{.ROOT_DIR}}"
 
