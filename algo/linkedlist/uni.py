@@ -97,15 +97,13 @@ class UniDirectionalLinkedList:
             else:
                 raise ValueError("empty linked list")
         else:
-            raise TypeError("list indices must be integers or slices, not float")
+            raise TypeError("list indices must be integers or slices")  # noqa: E501
 
     def __setitem__(self, key: int, value: Any) -> None:  # noqa: CCR001
         if isinstance(key, int) and (key >= 0 or self.__len__() + key >= 0):
             current = self._head
             if current:
-                if key >= 0:
-                    key = key
-                else:
+                if key < 0:
                     key = self.__len__() + key
                 for _i in range(key):
                     if current.next:
@@ -125,9 +123,7 @@ class UniDirectionalLinkedList:
             if (key == 0 or self.__len__() + key == 0) and self._head:
                 self._head = self._head.next
             elif self._head and self.__len__() + key > 0:
-                if key > 0:
-                    key = key
-                else:
+                if key < 0:
                     key = self.__len__() + key
                 if self._head:
                     current = self._head

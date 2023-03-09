@@ -1,6 +1,7 @@
 from algo.linkedlist.uni import UniDirectionalLinkedList
-from typing import Any
 import pytest
+from typing import Any
+
 
 
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
@@ -65,7 +66,7 @@ def test_insert_beyond_limit(common_arg1: Any) -> None:
     assert ul == ["0_test", "1234", "test", "python100", "1000000"]
 
     ul.insert(-1000, "python100")
-    assert ul == ["python100", "0_test", "1234", "test", "python100", "1000000"]
+    assert ul == ["python100", "0_test", "1234", "test", "python100", "1000000"]  # noqa: E501
 
     with pytest.raises(TypeError) as excinfo:
         ul.insert(1.5, "python100")
@@ -93,7 +94,7 @@ def test__getitem__(common_arg1: Any) -> None:
     ul = common_arg1()
     with pytest.raises(TypeError) as excinfo:
         ul[-1.5]
-        assert "list indices must be integers or slices, not float" in str(excinfo.value)
+        assert "list indices must be integers or slices" in str(excinfo.value) # noqa: E501
 
     ul.append("123")
     assert ul[0] == "123"
