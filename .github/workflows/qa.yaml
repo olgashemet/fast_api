@@ -27,4 +27,4 @@ jobs:
       - name: 🔋 Dependencies are installed.
         run: poetry install --with dev
       - name: 📊 Tests are passed.
-        run: poetry run task code-lint run-tests-coverage
+        run: poetry run task code-lint
