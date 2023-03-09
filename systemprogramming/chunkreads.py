@@ -28,9 +28,9 @@ def write_initial(stream: IO, sz: int = 100) -> None:
         stream.write(f"{i}\n")
 
 
-def bench():
+def bench() -> None:
     # todo: physical file
-    # todo: use StringIO when size(path) <= 0.1 * psutil.virtual_memory().available
+    # todo:StringIO when size(path) <= 0.1 * psutil.virtual_memory().available
     # todo: physical file size: path.stat().st_size
     path = Path("./xxx.txt")
 

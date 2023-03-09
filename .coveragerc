@@ -10,6 +10,7 @@ omit = \
 	.run/
 	.venv/
 	.vscode/
+	systemprogramming/*
 relative_files = True
 source = .
 

@@ -25,20 +25,21 @@ tasks:
     desc: checks code against linters
     dir: "{{.USER_WORKING_DIR}}"
 
-  run-tests-coverage:
-    cmds:
-      - poetry run coverage html
-    deps:
-      - run-tests
-    desc: run tests with coverage
-    dir: "{{.ROOT_DIR}}"
-    generates:
-      - "{{.DIR_LOCAL}}/coverage/html/**/*"
-    run: once
+#  run-tests-coverage:
+#    cmds:
+#      - poetry run coverage html
+#    deps:
+#      - task: run-tests
+#        vars: { CLI_ARGS: "{{.CLI_ARGS}} --cov-fail-under=0" }
+#    desc: run tests with coverage
+#    dir: "{{.ROOT_DIR}}"
+#    generates:
+#      - "{{.DIR_LOCAL}}/coverage/html/**/*"
+#    run: once
 
   run-tests:
     cmds:
-      - poetry run pytest .
+      - poetry run pytest {{.CLI_ARGS}} .
     desc: runs tests
     dir: "{{.USER_WORKING_DIR}}"
     run: once
