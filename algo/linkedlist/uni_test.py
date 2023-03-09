@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
-def common_arg1(request) -> Any:
+def common_arg1(request: Any) -> Any:
     return request.param
 
 
@@ -189,12 +189,12 @@ def test__equal__(common_arg1: Any) -> None:
 
 
 if __name__ == "__main__":
-    test_uni_create()
-    test_uni_append()
-    test_insert_first()
-    test_insert_beyond_limit()
-    test_index()
-    test__getitem__()
-    test__setitem__()
-    test__delitem__()
-    test__len__()
+    test_uni_create(common_arg1)
+    test_uni_append(common_arg1)
+    test_insert_first(common_arg1)
+    test_insert_beyond_limit(common_arg1)
+    test_index(common_arg1)
+    test__getitem__(common_arg1)
+    test__setitem__(common_arg1)
+    test__delitem__(common_arg1)
+    test__len__(common_arg1)
