@@ -14,6 +14,11 @@ class Node:
 class UniDirectionalLinkedList:
     def __init__(self) -> None:
         self._head: Node | None = None
+        self.__len = 0
+        self.__last_node_changed = False
+        self.__last_node: Node | None = None
+        self.xxx = 0
+        self.yyy = 0
 
     def append(self, value: Any) -> None:
         new_node = Node(value)
@@ -22,33 +27,40 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
+        self.__len += 1
+        self.__last_node = new_node
+        self.__last_node_changed = False
+
     def insert(self, index: Any, obj: Any) -> None:  # noqa: CCR001
         """
         Inserts object before index
         """
 
+        if not isinstance(index, int):
+            err = f"{type(index)} object cannot be interpreted as an integer"
+            raise TypeError(err)
+
         new_node = Node(obj)
         current = self._head
-        if isinstance(index, int):
-            if index == 0 or current is None or self.__len__() + index < 0:
-                new_node.next = current
-                self._head = new_node
-            elif self.__len__() + index > 0:
-                if index < 0:
-                    index = self.__len__() + index
-                for _i in range(index - 1):
-                    if current.next is not None:
-                        current = current.next
-                    else:
-                        break
-                new_node.next = current.next
-                current.next = new_node
-        else:
-            raise TypeError(
-                f"{type(index)} object cannot be interpreted as an integer"
-            )
 
-    def index(self, value: Any) -> Any:  # noqa: CCR001
+        if index == 0 or current is None or len(self) + index < 0:
+            new_node.next = current
+            self._head = new_node
+        elif len(self) + index > 0:
+            if index < 0:
+                index = len(self) + index
+            for _i in range(index - 1):
+                if current.next is not None:
+                    current = current.next
+                else:
+                    break
+            new_node.next = current.next
+            current.next = new_node
+
+        self.__len += 1
+        self.__last_node_changed = True
+
+    def index(self, value: Any) -> Any:
         current = self._head
         index = 0
         while current:
@@ -72,14 +84,21 @@ class UniDirectionalLinkedList:
         return result
 
     def _get_last_node(self) -> Node | None:
-        current = self._head
+        if not self.__last_node_changed:
+            return self.__last_node
 
+        self.yyy += 1
+
+        current = self._head
         while current:
+            self.xxx += 1
             next_node = current.next
             if not next_node:
-                return current
+                break
             current = next_node
 
+        self.__last_node = current
+        self.__last_node_changed = False
         return current
 
     def __getitem__(self, index: Any) -> Any:  # noqa: CCR001
@@ -121,35 +140,36 @@ class UniDirectionalLinkedList:
     def __delitem__(self, key: int) -> None:  # noqa: CCR001
         if not isinstance(key, int):
             raise TypeError("not valid index")
-        else:
-            if (key == 0 or self.__len__() + key == 0) and self._head:
-                self._head = self._head.next
-            elif self._head and self.__len__() + key > 0:
-                if key < 0:
-                    key = self.__len__() + key
-                if self._head:
-                    current = self._head
-                    for _i in range(key - 1):
-                        if current.next is not None:
-                            current = current.next
-                        else:
-                            raise IndexError("list index out of the range")
-                    if current.next:
-                        current.next = current.next.next
-                else:
-                    raise ValueError("empty list")
+
+        if (key == 0 or self.__len__() + key == 0) and self._head:
+            self._head = self._head.next
+            self.__len -= 1
+            self.__last_node_changed = True
+        elif self._head and len(self) + key > 0:
+            if key < 0:
+                key = len(self) + key
+            if self._head:
+                current = self._head
+                for _i in range(key - 1):
+                    if current.next is not None:
+                        current = current.next
+                    else:
+                        raise IndexError("list index out of the range")
+                if current.next:
+                    current.next = current.next.next
+                self.__len -= 1
+                self.__last_node_changed = True
             else:
-                raise IndexError("list assignment index out of range")
+                raise ValueError("empty list")
+        else:
+            raise IndexError("list assignment index out of range")
 
     def __len__(self) -> int:
-        current = self._head
-        length_list = 0
-        while current:
-            length_list = length_list + 1
-            current = current.next
-        return length_list
+        return self.__len
 
     def __eq__(self, another: Any) -> bool:
+        if self is another:
+            return True
         if not isinstance(another, UniDirectionalLinkedList | list):
             return NotImplemented
         return self._to_list() == another
