@@ -34,9 +34,7 @@ class UniDirectionalLinkedList:
                 new_node.next = current
                 self._head = new_node
             elif self.__len__() + index > 0:
-                if index >= 0:
-                    index = index
-                else:
+                if index < 0:
                     index = self.__len__() + index
                 for _i in range(index - 1):
                     if current.next is not None:
@@ -46,7 +44,7 @@ class UniDirectionalLinkedList:
                 new_node.next = current.next
                 current.next = new_node
         else:
-            raise TypeError(f"{type(index)} object cannot be interpreted as an integer")
+            raise TypeError(f"{type(index)} object cannot be interpreted as an integer")  # noqa: BLK100,E501
 
     def index(self, value: Any) -> Any:  # noqa: CCR001
         current = self._head
@@ -86,17 +84,15 @@ class UniDirectionalLinkedList:
         if isinstance(index, int):
             current = self._head
             if current:
-                if index >= 0:
-                    index = index
-                else:
+                if index < 0:
                     index = self.__len__() + index
-                    if index < 0:
-                        raise IndexError("list index ou of the range")
+                if index < 0:
+                    raise IndexError("list index out of the range")
                 for _i in range(index):
                     if current.next:
                         current = current.next
                     else:
-                        raise IndexError("list index ou of the range")
+                        raise IndexError("list index out of the range")
                 return current.value
             else:
                 raise ValueError("empty linked list")
