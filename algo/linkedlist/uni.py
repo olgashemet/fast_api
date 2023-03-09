@@ -46,7 +46,7 @@ class UniDirectionalLinkedList:
         else:
             raise TypeError(
                 f"{type(index)} object cannot be interpreted as an integer"
-            )  # noqa: BLK100,E501
+            )
 
     def index(self, value: Any) -> Any:  # noqa: CCR001
         current = self._head
@@ -99,9 +99,7 @@ class UniDirectionalLinkedList:
             else:
                 raise ValueError("empty linked list")
         else:
-            raise TypeError(
-                "list indices must be integers or slices"
-            )  # noqa: E501
+            raise TypeError("list indices must be integers or slices")
 
     def __setitem__(self, key: int, value: Any) -> None:  # noqa: CCR001
         if isinstance(key, int) and (key >= 0 or self.__len__() + key >= 0):
