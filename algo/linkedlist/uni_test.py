@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
-def common_arg1(request) -> list:
+def common_arg1(request) -> Any:
     return request.param
 
 
