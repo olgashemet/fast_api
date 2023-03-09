@@ -30,14 +30,14 @@ class UniDirectionalLinkedList:
         new_node = Node(obj)
         current = self._head
         if isinstance(index, int):
-            if index == 0 or current is None or self.__len__()+index < 0:
+            if index == 0 or current is None or self.__len__() + index < 0:
                 new_node.next = current
                 self._head = new_node
-            elif self.__len__()+index > 0:
+            elif self.__len__() + index > 0:
                 if index >= 0:
                     index = index
                 else:
-                    index = self.__len__()+index
+                    index = self.__len__() + index
                 for _i in range(index - 1):
                     if current.next is not None:
                         current = current.next
@@ -89,7 +89,7 @@ class UniDirectionalLinkedList:
                 if index >= 0:
                     index = index
                 else:
-                    index = self.__len__()+index
+                    index = self.__len__() + index
                     if index < 0:
                         raise IndexError("list index ou of the range")
                 for _i in range(index):
@@ -103,23 +103,21 @@ class UniDirectionalLinkedList:
         else:
             raise TypeError("list indices must be integers or slices, not float")
 
-
-
     def __setitem__(self, key: int, value: Any) -> None:  # noqa: CCR001
-        if isinstance(key, int) and (key >= 0 or self.__len__()+key >= 0):
+        if isinstance(key, int) and (key >= 0 or self.__len__() + key >= 0):
             current = self._head
             if current:
                 if key >= 0:
                     key = key
                 else:
-                    key = self.__len__()+key
+                    key = self.__len__() + key
                 for _i in range(key):
                     if current.next:
                         current = current.next
                     else:
                         raise IndexError("list index out of the range")
                 current.value = value
-        elif self.__len__()+key < 0:
+        elif self.__len__() + key < 0:
             raise IndexError("list index out of the range")
         else:
             raise TypeError("not valid index")
@@ -128,13 +126,13 @@ class UniDirectionalLinkedList:
         if not isinstance(key, int):
             raise TypeError("not valid index")
         else:
-            if (key == 0 or self.__len__()+key == 0) and self._head:
+            if (key == 0 or self.__len__() + key == 0) and self._head:
                 self._head = self._head.next
-            elif self._head and self.__len__()+key > 0:
+            elif self._head and self.__len__() + key > 0:
                 if key > 0:
                     key = key
                 else:
-                    key = self.__len__()+key
+                    key = self.__len__() + key
                 if self._head:
                     current = self._head
                     for _i in range(key - 1):
