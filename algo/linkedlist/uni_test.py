@@ -5,6 +5,27 @@ import pytest
 from algo.linkedlist.uni import UniDirectionalLinkedList
 
 
+def test_split_linked_list() -> None:
+    ul = UniDirectionalLinkedList()
+    ul.append(1)
+    ul.append(2)
+    ul.append(3)
+    ul.append(4)
+    ul.append(5)
+    assert ul.split_linked_list() == ([2, 4], [1, 3, 5])
+
+def test_split_linked_list_into_linked_list() -> None:
+    ul = UniDirectionalLinkedList()
+    ul.append(1)
+    ul.append(2)
+    ul.append(3)
+    ul.append(4)
+    ul.append(5)
+    ul.append(6)
+    ul.append(7)
+    ul.append(8)
+    assert ul.split_linked_list_into_linked_list() == [1, 3, 5]
+
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
 def common_arg1(request: Any) -> Any:
     return request.param
@@ -209,3 +230,5 @@ if __name__ == "__main__":
     test__setitem__(common_arg1)
     test__delitem__(common_arg1)
     test__len__(common_arg1)
+    test_split_linked_list(UniDirectionalLinkedList)
+    test_split_linked_list_into_linked_list(UniDirectionalLinkedList)

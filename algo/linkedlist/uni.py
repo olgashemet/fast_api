@@ -173,3 +173,75 @@ class UniDirectionalLinkedList:
         if not isinstance(another, UniDirectionalLinkedList | list):
             return NotImplemented
         return self._to_list() == another
+
+    def split_linked_list(self) -> None:
+        current = self._head
+        list_1=[]
+        list_2 = []
+        if not current:
+            raise ValueError("empty list")
+        else:
+            while current:
+                if current.value % 2 ==0:
+                    list_1.append(current.value)
+                else:
+                    list_2.append(current.value)
+                current = current.next
+        return (list_1, list_2)
+
+    def split_linked_list_into_linked_list(self) -> None:
+
+        current = self._head
+        evenStart = None
+        evenEnd = None
+        if not current:
+            raise ValueError("empty list")
+        else:
+
+            while current:
+                if current.value % 2 == 0:
+                    if (evenStart == None):
+                        evenStart=current
+                        evenEnd = evenStart
+                    else:
+                        evenEnd.next = current
+                        #delem odin sdvig v pravo
+                        evenEnd = evenEnd.next
+
+                current = current.next
+
+
+
+
+
+
+
+
+                #     next_node = Node(current.value)
+                #     current_node.next = next_node
+                #     current_node=current_node.next
+                # current = current.next
+        # return current_odd
+
+        # self._head = new_node
+        # new_node = Node(value)
+        # if last_node := self._get_last_node():
+        #     last_node.next = new_node
+        # else:
+        #     self._head = new_node
+        # current = self._head
+        # while current:
+        #     self.xxx += 1
+        #     next_node = current.next
+        #     if not next_node:
+        #         break
+        #     current = next_node
+
+        # new_node = Node(obj)
+        # current = self._head
+        #
+        # if index == 0 or current is None or len(self) + index < 0:
+        #     new_node.next = current
+
+
+
