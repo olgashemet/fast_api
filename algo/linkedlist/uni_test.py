@@ -160,6 +160,7 @@ def test__delitem__(common_arg1: Any) -> None:
     ul.append(5)
 
     del ul[4]
+
     assert ul == [1, 2, 3, 4]
 
     del ul[3]
@@ -185,14 +186,6 @@ def test__len__(common_arg1: Any) -> None:
 
     ul.append(1)
     assert len(ul) == 1
-
-
-def test__equal__(common_arg1: Any) -> None:
-    li = common_arg1()
-
-    assert [] == li
-    assert li == []
-    assert li == li
 
 
 def test__eq__modified(common_arg1: Any) -> None:
