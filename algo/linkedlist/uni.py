@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Any
+from typing import Any, List
 from typing import Optional
 from typing import final
 
@@ -187,39 +187,3 @@ class UniDirectionalLinkedList:
                 current = current.next
                 current_1 = current_1.next
         return True
-
-    def split_linked_list(self) -> None:
-        current = self._head
-        list_1 = []
-        list_2 = []
-        if not current:
-            raise ValueError("empty list")
-        else:
-            while current:
-                if current.value % 2 == 0:
-                    list_1.append(current.value)
-                else:
-                    list_2.append(current.value)
-                current = current.next
-        return (list_1, list_2)
-
-    def split_linked_list_into_linked_list(self) -> None:
-
-        current = self._head
-        evenStart = None
-        evenEnd = None
-        if not current:
-            raise ValueError("empty list")
-        else:
-
-            while current:
-                if current.value % 2 == 0:
-                    if (evenStart == None):
-                        evenStart = current
-                        evenEnd = evenStart
-                    else:
-                        evenEnd.next = current
-                        # delem odin sdvig v pravo
-                        evenEnd = evenEnd.next
-
-                current = current.next

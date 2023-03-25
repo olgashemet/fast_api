@@ -213,6 +213,7 @@ def test__eq__modified(common_arg1: Any) -> None:
 
     assert li == mi
 
+
 if __name__ == "__main__":
     test_uni_create(common_arg1)
     test_uni_append(common_arg1)
