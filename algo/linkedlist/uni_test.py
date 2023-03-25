@@ -139,7 +139,7 @@ def test__setitem__(common_arg1: Any) -> None:
     assert ul == [6, "olga", 4]
 
     with pytest.raises(TypeError) as excinfo:
-        ul[-1.5] = 'something'
+        ul[-1.5] = "new value"
         assert "not valid index" in str(excinfo.value)
 
     with pytest.raises(IndexError) as excinfo:
