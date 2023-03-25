@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Any, List
+from typing import Any
 from typing import Optional
 from typing import final
 
@@ -14,7 +14,7 @@ class Node:
 class UniDirectionalLinkedList:
     def __init__(self) -> None:
         self._head: Node | None = None
-        self.__len__= 0
+        self.__len = 0
         self.__last_node_changed = False
         self.__last_node: Node | None = None
         self.xxx = 0
@@ -27,7 +27,7 @@ class UniDirectionalLinkedList:
         else:
             self._head = new_node
 
-        self.__len__+= 1
+        self.__len += 1
         self.__last_node = new_node
         self.__last_node_changed = False
 
@@ -43,12 +43,12 @@ class UniDirectionalLinkedList:
         new_node = Node(obj)
         current = self._head
 
-        if index == 0 or current is None or self.__len__+ index < 0:
+        if index == 0 or current is None or self.__len + index < 0:
             new_node.next = current
             self._head = new_node
         else:
             if index < 0:
-                index = self.__len__+ index
+                index = self.__len + index
             for _i in range(index - 1):
                 if current.next is not None:
                     current = current.next
@@ -57,7 +57,7 @@ class UniDirectionalLinkedList:
             new_node.next = current.next
             current.next = new_node
 
-        self.__len__+= 1
+        self.__len += 1
         self.__last_node_changed = True
 
     def index(self, value: Any) -> Any:
@@ -108,11 +108,11 @@ class UniDirectionalLinkedList:
         if not current:
             raise ValueError("empty linked list")
 
-        if self.__len__+ index < 0:
+        if self.__len + index < 0:
             raise IndexError("list index out of the range")
 
         if index < 0:
-            index = self.__len__+ index
+            index = self.__len + index
         for _i in range(index):
             if current.next:
                 current = current.next
@@ -124,13 +124,13 @@ class UniDirectionalLinkedList:
         if not isinstance(key, int):
             raise TypeError("not valid index")
 
-        if self.__len__+ key < 0:
+        if self.__len + key < 0:
             raise IndexError("list index out of the range")
 
         current = self._head
         if current:
             if key < 0:
-                key = self.__len__+ key
+                key = self.__len + key
             for _i in range(key):
                 if current.next:
                     current = current.next
@@ -144,20 +144,20 @@ class UniDirectionalLinkedList:
 
         current = self._head
 
-        if self.__len__+ key < 0:
+        if self.__len + key < 0:
             raise IndexError("list assignment index out of range")
 
         if not current:
             raise ValueError("empty list")
 
-        if key == 0 or self.__len__+ key == 0:
+        if key == 0 or self.__len + key == 0:
             if current.next:
                 current = current.next
-            self.__len__-= 1
+            self.__len -= 1
             self.__last_node_changed = True
 
         if key < 0:
-            key = self.__len__+ key
+            key = self.__len + key
 
         for _i in range(key - 1):
             if current.next is not None:
@@ -166,11 +166,11 @@ class UniDirectionalLinkedList:
                 raise IndexError("list index out of the range")
         if current.next:
             current.next = current.next.next
-        self.__len__-= 1
+        self.__len -= 1
         self.__last_node_changed = True
 
     def __len__(self) -> int:
-        return self.__len__
+        return self.__len
 
     def __eq__(self, another: Any) -> bool:
         if self is another:
