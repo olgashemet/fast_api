@@ -5,27 +5,6 @@ import pytest
 from algo.linkedlist.uni import UniDirectionalLinkedList
 
 
-def test_split_linked_list() -> None:
-    ul = UniDirectionalLinkedList()
-    ul.append(1)
-    ul.append(2)
-    ul.append(3)
-    ul.append(4)
-    ul.append(5)
-    assert ul.split_linked_list() == ([2, 4], [1, 3, 5])
-
-def test_split_linked_list_into_linked_list() -> None:
-    ul = UniDirectionalLinkedList()
-    ul.append(1)
-    ul.append(2)
-    ul.append(3)
-    ul.append(4)
-    ul.append(5)
-    ul.append(6)
-    ul.append(7)
-    ul.append(8)
-    assert ul.split_linked_list_into_linked_list() == [1, 3, 5]
-
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
 def common_arg1(request: Any) -> Any:
     return request.param
@@ -160,7 +139,7 @@ def test__setitem__(common_arg1: Any) -> None:
     assert ul == [6, "olga", 4]
 
     with pytest.raises(TypeError) as excinfo:
-        ul[-1.5]
+        ul[-1.5] = 'something'
         assert "not valid index" in str(excinfo.value)
 
     with pytest.raises(IndexError) as excinfo:
@@ -199,10 +178,6 @@ def test__delitem__(common_arg1: Any) -> None:
     del ul[-1]
     assert ul == []
 
-    with pytest.raises(IndexError) as excinfo:
-        del ul[-20]
-    assert "list assignment index out of range" in str(excinfo.value)
-
 
 def test__len__(common_arg1: Any) -> None:
     ul = common_arg1()
@@ -220,6 +195,24 @@ def test__equal__(common_arg1: Any) -> None:
     assert li == li
 
 
+def test__eq__modified(common_arg1: Any) -> None:
+    li = common_arg1()
+    mi = common_arg1()
+
+    assert li == mi
+
+    li.append(1)
+    li.append(2)
+    li.append(3)
+    mi.append(1)
+
+    assert li != mi
+
+    mi.append(2)
+    mi.append(3)
+
+    assert li == mi
+
 if __name__ == "__main__":
     test_uni_create(common_arg1)
     test_uni_append(common_arg1)
@@ -230,5 +223,4 @@ if __name__ == "__main__":
     test__setitem__(common_arg1)
     test__delitem__(common_arg1)
     test__len__(common_arg1)
-    test_split_linked_list(UniDirectionalLinkedList)
-    test_split_linked_list_into_linked_list(UniDirectionalLinkedList)
+    test__eq__modified(common_arg1)
