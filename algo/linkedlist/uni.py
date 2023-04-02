@@ -153,7 +153,7 @@ class UniDirectionalLinkedList:
         if key == 0 or self.__len + key == 0:
             if current.next:
                 current = current.next
-            self.__len -= 1
+            self.__decrease_len()
             self.__last_node_changed = True
 
         if key < 0:
@@ -166,8 +166,12 @@ class UniDirectionalLinkedList:
                 raise IndexError("list index out of the range")
         if current.next:
             current.next = current.next.next
-        self.__len -= 1
+        self.__decrease_len()
         self.__last_node_changed = True
+
+    def __decrease_len(self) -> None:
+        if self.__len > 0:
+            self.__len -= 1
 
     def __len__(self) -> int:
         return self.__len
@@ -177,6 +181,9 @@ class UniDirectionalLinkedList:
             return True
         if not isinstance(another, UniDirectionalLinkedList | list):
             return NotImplemented
+        if len(another) != len(self):
+            return False
+
         current = self._head
         i = 0
         while current and i < len(another):
