@@ -179,7 +179,7 @@ class UniDirectionalLinkedList:
             return NotImplemented
         current = self._head
         i = 0
-        while current and i < another.__len__():
+        while current and i < len(another):
             current_1 = another[i]
             i = i + 1
             if current.value != current_1:
