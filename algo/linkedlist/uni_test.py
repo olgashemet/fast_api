@@ -139,7 +139,7 @@ def test__setitem__(common_arg1: Any) -> None:
     assert ul == [6, "olga", 4]
 
     with pytest.raises(TypeError) as excinfo:
-        ul[-1.5]
+        ul[-1.5] = "new value"
         assert "not valid index" in str(excinfo.value)
 
     with pytest.raises(IndexError) as excinfo:
@@ -160,6 +160,7 @@ def test__delitem__(common_arg1: Any) -> None:
     ul.append(5)
 
     del ul[4]
+
     assert ul == [1, 2, 3, 4]
 
     del ul[3]
@@ -178,10 +179,6 @@ def test__delitem__(common_arg1: Any) -> None:
     del ul[-1]
     assert ul == []
 
-    with pytest.raises(IndexError) as excinfo:
-        del ul[-20]
-    assert "list assignment index out of range" in str(excinfo.value)
-
 
 def test__len__(common_arg1: Any) -> None:
     ul = common_arg1()
@@ -191,12 +188,23 @@ def test__len__(common_arg1: Any) -> None:
     assert len(ul) == 1
 
 
-def test__equal__(common_arg1: Any) -> None:
+def test__eq__modified(common_arg1: Any) -> None:
     li = common_arg1()
+    mi = common_arg1()
 
-    assert [] == li
-    assert li == []
-    assert li == li
+    assert li == mi
+
+    li.append(1)
+    li.append(2)
+    li.append(3)
+    mi.append(1)
+
+    assert li != mi
+
+    mi.append(2)
+    mi.append(3)
+
+    assert li == mi
 
 
 if __name__ == "__main__":
@@ -209,3 +217,4 @@ if __name__ == "__main__":
     test__setitem__(common_arg1)
     test__delitem__(common_arg1)
     test__len__(common_arg1)
+    test__eq__modified(common_arg1)

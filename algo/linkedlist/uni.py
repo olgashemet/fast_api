@@ -43,12 +43,12 @@ class UniDirectionalLinkedList:
         new_node = Node(obj)
         current = self._head
 
-        if index == 0 or current is None or len(self) + index < 0:
+        if index == 0 or current is None or self.__len + index < 0:
             new_node.next = current
             self._head = new_node
-        elif len(self) + index > 0:
+        else:
             if index < 0:
-                index = len(self) + index
+                index = self.__len + index
             for _i in range(index - 1):
                 if current.next is not None:
                     current = current.next
@@ -102,67 +102,76 @@ class UniDirectionalLinkedList:
         return current
 
     def __getitem__(self, index: Any) -> Any:  # noqa: CCR001
-        if isinstance(index, int):
-            current = self._head
-            if current:
-                if index < 0:
-                    index = self.__len__() + index
-                if index < 0:
-                    raise IndexError("list index out of the range")
-                for _i in range(index):
-                    if current.next:
-                        current = current.next
-                    else:
-                        raise IndexError("list index out of the range")
-                return current.value
-            else:
-                raise ValueError("empty linked list")
-        else:
+        if not isinstance(index, int):
             raise TypeError("list indices must be integers or slices")
+        current = self._head
+        if not current:
+            raise ValueError("empty linked list")
+
+        if self.__len + index < 0:
+            raise IndexError("list index out of the range")
+
+        if index < 0:
+            index = self.__len + index
+        for _i in range(index):
+            if current.next:
+                current = current.next
+            else:
+                raise IndexError("list index out of the range")
+        return current.value
 
     def __setitem__(self, key: int, value: Any) -> None:  # noqa: CCR001
-        if isinstance(key, int) and (key >= 0 or self.__len__() + key >= 0):
-            current = self._head
-            if current:
-                if key < 0:
-                    key = self.__len__() + key
-                for _i in range(key):
-                    if current.next:
-                        current = current.next
-                    else:
-                        raise IndexError("list index out of the range")
-                current.value = value
-        elif self.__len__() + key < 0:
-            raise IndexError("list index out of the range")
-        else:
+        if not isinstance(key, int):
             raise TypeError("not valid index")
+
+        if self.__len + key < 0:
+            raise IndexError("list index out of the range")
+
+        current = self._head
+        if current:
+            if key < 0:
+                key = self.__len + key
+            for _i in range(key):
+                if current.next:
+                    current = current.next
+                else:
+                    raise IndexError("list index out of the range")
+            current.value = value
 
     def __delitem__(self, key: int) -> None:  # noqa: CCR001
         if not isinstance(key, int):
             raise TypeError("not valid index")
 
-        if (key == 0 or self.__len__() + key == 0) and self._head:
-            self._head = self._head.next
-            self.__len -= 1
-            self.__last_node_changed = True
-        elif self._head and len(self) + key > 0:
-            if key < 0:
-                key = len(self) + key
-            if self._head:
-                current = self._head
-                for _i in range(key - 1):
-                    if current.next is not None:
-                        current = current.next
-                    else:
-                        raise IndexError("list index out of the range")
-                if current.next:
-                    current.next = current.next.next
-                self.__len -= 1
-                self.__last_node_changed = True
-            else:
-                raise ValueError("empty list")
-        else:
+        current = self._head
+
+        if self.__len + key < 0:
             raise IndexError("list assignment index out of range")
+
+        if not current:
+            raise ValueError("empty list")
+
+        if key == 0 or self.__len + key == 0:
+            if current.next:
+                current = current.next
+            self.__decrease_len()
+            self.__last_node_changed = True
+
+        if key < 0:
+            key = self.__len + key
+
+        for _i in range(key - 1):
+            if current.next is not None:
+                current = current.next
+            else:
+                raise IndexError("list index out of the range")
+        if current.next:
+            current.next = current.next.next
+        self.__decrease_len()
+        self.__last_node_changed = True
+
+    def __decrease_len(self) -> None:
+        if self.__len > 0:
+            self.__len -= 1
 
     def __len__(self) -> int:
         return self.__len
@@ -172,4 +181,16 @@ class UniDirectionalLinkedList:
             return True
         if not isinstance(another, UniDirectionalLinkedList | list):
             return NotImplemented
-        return self._to_list() == another
+        if len(another) != len(self):
+            return False
+
+        current = self._head
+        i = 0
+        while current and i < len(another):
+            current_1 = another[i]
+            i = i + 1
+            if current.value != current_1:
+                return False
+            else:
+                current = current.next
+        return True
