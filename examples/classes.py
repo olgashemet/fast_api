@@ -32,3 +32,30 @@ class T:
 # 3. type
 # 4. getattr, setattr, delattr, hasattr
 # 5. staticmethod, classmethod
+
+
+# === 1 ===
+
+class Cat:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+
+    def meow(self):
+        print(f"Кот {self.name} ({self.age} лет) мяукает")
+
+
+class Dog:
+    name = "Бобик"
+
+
+vaska = Cat("Васька", 5)
+vaska.meow()
+
+joy = Cat("Джой", 15)
+joy.meow()
+
+
+print(joy.name)
+joy.name = 1
+
