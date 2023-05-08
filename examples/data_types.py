@@ -16,6 +16,15 @@ def useful_function() -> Data:
     return Data(campaign_data, phone, age)
 
 
+class get_overview_data:
+    @property
+    def ccpi(self) -> float:
+        return get_division("fdsfs", "fdsfs") * 100
+
+    @property
+    def kpi(self) -> float:
+        return 1 / 3 * self.ccpi
+
 # ======================================
 
 
@@ -30,6 +39,10 @@ def api_endpoint():
 
     resp2 = useful_function()
     debug(resp2.xxx)
+
+    od = get_overview_data()
+    debug(od.ccpi)
+    debug(od.kpi)
 
 
 if __name__ == '__main__':
