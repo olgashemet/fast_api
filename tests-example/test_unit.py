@@ -1,7 +1,9 @@
-from unittest.mock import MagicMock, patch
-from devtools import debug
 import os
+from unittest.mock import MagicMock
+from unittest.mock import patch
+
 import requests
+from devtools import debug
 from unit import Data
 
 

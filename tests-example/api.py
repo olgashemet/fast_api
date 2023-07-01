@@ -1,5 +1,7 @@
 from typing import Annotated
-from fastapi import FastAPI, Path
+
+from fastapi import FastAPI
+from fastapi import Path
 from unit import Data
 
 app = FastAPI()

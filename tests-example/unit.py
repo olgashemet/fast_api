@@ -1,5 +1,6 @@
-from devtools import debug
 from os import urandom
+
+from devtools import debug
 
 
 class Data:

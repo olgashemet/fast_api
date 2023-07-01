@@ -16,7 +16,9 @@ class DTO:
         for arg, value in kw.items():
             anno_type = anno[arg]
             if not isinstance(value, anno_type):
-                raise TypeError(f"arg `{arg=!r}` expected {anno_type}, got {type(value)}")
+                raise TypeError(
+                    f"arg `{arg=!r}` expected {anno_type}, got {type(value)}"
+                )
 
             setattr(self, arg, value)
 

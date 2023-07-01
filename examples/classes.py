@@ -36,6 +36,7 @@ class T:
 
 # === 1 ===
 
+
 class Cat:
     def __init__(self, name: str, age: int):
         self.name = name
@@ -58,4 +59,3 @@ joy.meow()
 
 print(joy.name)
 joy.name = 1
-

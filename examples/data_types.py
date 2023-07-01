@@ -1,5 +1,8 @@
+from typing import Any
+from typing import NamedTuple
+from typing import Optional
+
 from devtools import debug
-from typing import NamedTuple, Any, Optional
 
 
 class Data(NamedTuple):
@@ -10,9 +13,9 @@ class Data(NamedTuple):
 
 
 def useful_function() -> Data:
-    campaign_data="A"
-    phone="12"
-    age=12
+    campaign_data = "A"
+    phone = "12"
+    age = 12
     return Data(campaign_data, phone, age)
 
 
@@ -24,6 +27,7 @@ class get_overview_data:
     @property
     def kpi(self) -> float:
         return 1 / 3 * self.ccpi
+
 
 # ======================================
 
@@ -45,6 +49,6 @@ def api_endpoint():
     debug(od.kpi)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     existing_endpoint()
     api_endpoint()
