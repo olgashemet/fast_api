@@ -2,9 +2,9 @@ from typing import Any
 
 
 class Cat:
-    age='3'
+    age = "3"
 
-    def __init__(self) :
+    def __init__(self):
         # self.age=5
 
         print("cat is created")
@@ -17,17 +17,12 @@ class Cat:
         return f"it is a {self.__class__.__name__} {self.name}"
 
 
-    
-    
-    
-
 cat = Cat()
 print(cat.__dict__)
-cat.set_name('Meya')
+cat.set_name("Meya")
 print(cat)
-##represents a dictionary or any mapping object that is used to store the attributes of the object. Why not age ? 
+##represents a dictionary or any mapping object that is used to store the attributes of the object. Why not age ?
 print(cat.__dict__)
-
 
 
 # cat.change_name='Murka'
@@ -41,8 +36,8 @@ print(cat.__dict__)
 #     def __str__(self):
 
 #         return f"it is a {self.__class__.__name__}   {self.name}"
-    
-    
+
+
 # cat = Cat()
 # cat_2=Cat()
 # dog=Dog()

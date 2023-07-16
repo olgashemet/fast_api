@@ -16,10 +16,11 @@ class User:
     age: int = 30
 
     def calculate_year_of_birth(self):
-        year=2023-int(self.age)
+        year = 2023 - int(self.age)
         return year
 
-first_person= User('30',  'BBB', 'AAA')
+
+first_person = User("30", "BBB", "AAA")
 print(first_person)
 print(first_person.calculate_year_of_birth())
 
@@ -29,5 +30,5 @@ class Person:
 
 
 @dataclass
-class People():
+class People:
     people: list[Person]

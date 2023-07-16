@@ -176,13 +176,13 @@ class UniDirectionalLinkedList:
 
     def split_linked_list(self) -> None:
         current = self._head
-        list_1=[]
+        list_1 = []
         list_2 = []
         if not current:
             raise ValueError("empty list")
         else:
             while current:
-                if current.value % 2 ==0:
+                if current.value % 2 == 0:
                     list_1.append(current.value)
                 else:
                     list_2.append(current.value)
@@ -190,32 +190,23 @@ class UniDirectionalLinkedList:
         return (list_1, list_2)
 
     def split_linked_list_into_linked_list(self) -> None:
-
         current = self._head
         evenStart = None
         evenEnd = None
         if not current:
             raise ValueError("empty list")
         else:
-
             while current:
                 if current.value % 2 == 0:
-                    if (evenStart == None):
-                        evenStart=current
+                    if evenStart == None:
+                        evenStart = current
                         evenEnd = evenStart
                     else:
                         evenEnd.next = current
-                        #delem odin sdvig v pravo
+                        # delem odin sdvig v pravo
                         evenEnd = evenEnd.next
 
                 current = current.next
-
-
-
-
-
-
-
 
                 #     next_node = Node(current.value)
                 #     current_node.next = next_node
@@ -242,6 +233,3 @@ class UniDirectionalLinkedList:
         #
         # if index == 0 or current is None or len(self) + index < 0:
         #     new_node.next = current
-
-
-

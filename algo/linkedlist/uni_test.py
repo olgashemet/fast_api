@@ -14,6 +14,7 @@ def test_split_linked_list() -> None:
     ul.append(5)
     assert ul.split_linked_list() == ([2, 4], [1, 3, 5])
 
+
 def test_split_linked_list_into_linked_list() -> None:
     ul = UniDirectionalLinkedList()
     ul.append(1)
@@ -25,6 +26,7 @@ def test_split_linked_list_into_linked_list() -> None:
     ul.append(7)
     ul.append(8)
     assert ul.split_linked_list_into_linked_list() == [1, 3, 5]
+
 
 @pytest.fixture(params=[list, UniDirectionalLinkedList])
 def common_arg1(request: Any) -> Any:
