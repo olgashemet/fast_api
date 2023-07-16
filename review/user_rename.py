@@ -1,13 +1,14 @@
 from pydantic import BaseModel, ValidationError, validator
 from pydantic.fields import Field
 from pydantic.types import StrictStr
+from typing import Annotated
 
 
 class UserModel(BaseModel):
-    name: str = Field(..., min_length=1)
-    password: StrictStr
-    age: int = 30
-    password2='atr'
+    name: Annotated[str, Field(min_length=1)]
+    password: Annotated[StrictStr, Field()]
+    age: Annotated[int, Field()]
+    password2: Annotated[str, Field()] = "def pass 2"
 
 
     @validator('name')
@@ -15,7 +16,7 @@ class UserModel(BaseModel):
         if len(name) < 4:
             raise ValueError('name must be longer then 4 letters')
 
-print(UserModel(name='Ol888', password=1234, age='32'))
+print(UserModel(name='Ol888', password="1234", age='32'))
 try:
     UserModel(name='Ol888', password=123, age='32')
 except ValidationError as e:

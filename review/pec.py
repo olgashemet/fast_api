@@ -1,8 +1,11 @@
+from typing import Any
+
+
 class Cat:
     age='3'
 
     def __init__(self) :
-        self.age=5
+        # self.age=5
 
         print("cat is created")
 
@@ -12,13 +15,9 @@ class Cat:
     def __str__(self):
         print(self.__dict__)
         return f"it is a {self.__class__.__name__} {self.name}"
-    
-    def get_result(self, x, y):
-        self.x=x
-        self.y=y
-        return x+ y 
-    
 
+
+    
     
     
 
