@@ -1,5 +1,4 @@
 import keyword
-import re
 
 from devtools import debug
 

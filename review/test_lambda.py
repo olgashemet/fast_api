@@ -203,14 +203,14 @@ def get_country_data_v2(data, kpi, sort):
             reverse=direction != "min",
         )
 
-    asc_data = sort_my_data(data, "budget")
+    sort_my_data(data, "budget")
 
     print("sorted data")
     print(country_data)
     countires = [{"country": d["country"], kpi: d[kpi]} for d in country_data]
 
     compact_list = list(map(lambda x: f'{x["country"]}- {x[kpi]}', countires))
-    campaign_names = [d["campaign_name"] for d in data][0]
+    [d["campaign_name"] for d in data][0]
     return {
         "format": "str_list",
         "data": [

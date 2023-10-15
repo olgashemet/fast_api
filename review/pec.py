@@ -1,6 +1,3 @@
-from typing import Any
-
-
 class Cat:
     age = "3"
 

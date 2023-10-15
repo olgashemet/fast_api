@@ -1,5 +1,3 @@
-from devtools import debug
-
 """
 hex: 0123456789abcdef
 
