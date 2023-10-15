@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+import httpx
 import pytest
-import requests
 from devtools import debug
 from unit import Data
 
@@ -26,7 +26,7 @@ class TestUnit:
 class TestIntegration:
     @pytest.mark.skip(reason="localhost:800 is not available, unknown")
     def test_api_v1_data(self) -> None:
-        response = requests.get(
+        response = httpx.get(
             "http://localhost:8000/api/v1/data/4",
             timeout=4,
         )
