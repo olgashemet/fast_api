@@ -1,21 +1,22 @@
 import asyncio
+from typing import Any
 
 from devtools import debug
 
 
 class CountHandler:
-    async def query_data(self):
+    async def query_data(self) -> int:
         await asyncio.sleep(4)
         return 2579
 
 
 class DataHandler:
-    async def query_data(self):
+    async def query_data(self) -> list[dict[str, Any]]:
         await asyncio.sleep(8)
         return [{"sku": 2121}]
 
 
-async def main():
+async def main() -> None:
     with debug.timer("multitasking: asyncio") as timer:
         count_handler = CountHandler()
         data_handler = DataHandler()

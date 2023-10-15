@@ -1,7 +1,9 @@
 from typing import Any
 from typing import Optional
 
+import pandas as pd
 from devtools import debug
+from pandas import DataFrame
 from pydantic.main import BaseModel
 
 
@@ -12,24 +14,25 @@ class Data(BaseModel):
     xxx: Optional[int] = None
 
 
-def sum_age(age):
+def sum_age(age: int) -> int:
+    debug(age)
     something = 10
     return something
 
 
-def useful_function(age) -> Data:
+def useful_function(age: int) -> Data:
     campaign_data = "A"
     phone = "12"
     age = sum_age(age)
     return Data(campaign_data=campaign_data, phone=phone, age=age)
 
 
-def existing_endpoint(age):
-    x = useful_function(age)
-    print(x.phone)
+def existing_endpoint(age: int) -> None:
+    obj = useful_function(age)
+    debug(obj.phone)
 
 
-def api_endpoint(age):
+def api_endpoint(age: int) -> None:
     resp1 = vars(useful_function(age))
     debug("resp1")
     debug(resp1)
@@ -41,7 +44,7 @@ def api_endpoint(age):
 api_endpoint(10)
 
 
-def get_division(df, nom, den):
+def get_division(df: DataFrame, nom: Any, den: Any) -> Any:
     if nom in df and den in df and df[den] > 0:
         return df[nom] / df[den]
     return 0
@@ -62,18 +65,44 @@ class CampaignAggregatedDataPoint(BaseModel):
     acos: float
 
 
-def aggregate_device_data(self, data):
+def aggregate_device_data(self: Any, data: Any) -> CampaignAggregatedDataPoint:
+    debug(self)
     budget_spent = data.budget_spent.sum()
     items_sold = data.items_sold.sum()
     attributed_gmv = data.attributed_gmv.sum()
     ad_impressions = data.ad_impressions.sum()
     partner_budget_spent = data.partner_budget_spent.sum()
     clicks_ad = data.clicks_ad.sum()
-    # ctr = get_division(overview, 'clicks_ad', 'ad_impressions') * 100
-    # cpc = get_division(overview, 'budget_spent', 'clicks_ad')
-    # overview['roas'] = get_division(overview, 'attributed_gmv', 'budget_spent')
-    # overview['acos'] = get_division(overview, 'budget_spent', 'attributed_gmv') * 100
-    # overview['ropi'] = get_overview_data_1(overview).ropi
+
+    # ctr = (
+    #     get_division(
+    #         overview,
+    #         "clicks_ad",
+    #         "ad_impressions",
+    #     )
+    #     * 100
+    # )
+    # cpc = get_division(
+    #     overview,
+    #     "budget_spent",
+    #     "clicks_ad",
+    # )
+    # overview["roas"] = get_division(
+    #     overview,
+    #     "attributed_gmv",
+    #     "budget_spent",
+    # )
+    # overview["acos"] = (
+    #     get_division(
+    #         overview,
+    #         "budget_spent",
+    #         "attributed_gmv",
+    #     )
+    #     * 100
+    # )
+    # overview["ropi"] = get_overview_data_1(
+    #     overview,
+    # ).ropi
 
     return CampaignAggregatedDataPoint(
         budget_spent=budget_spent,
@@ -82,10 +111,14 @@ def aggregate_device_data(self, data):
         ad_impressions=ad_impressions,
         partner_budget_spent=partner_budget_spent,
         clicks_ad=clicks_ad,
+        acos=1.0,
+        ropi=1.0,
+        roas=1.0,
+        cpc=1.0,
+        ctr=1.0,
+        viewable_impressions=None,
     )
 
-
-import pandas as pd
 
 # initialize list of lists
 data = [

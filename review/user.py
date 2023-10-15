@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from devtools import debug
+
 
 @dataclass
 class User:
@@ -14,14 +16,18 @@ class User:
     profession: str
     age: int = 30
 
-    def calculate_year_of_birth(self):
+    def calculate_year_of_birth(self) -> int:
         year = 2023 - int(self.age)
         return year
 
 
-first_person = User("30", "BBB", "AAA")
-print(first_person)
-print(first_person.calculate_year_of_birth())
+first_person = User(
+    age=30,
+    profession="BBB",
+    name="AAA",
+)
+debug(first_person)
+debug(first_person.calculate_year_of_birth())
 
 
 class Person:

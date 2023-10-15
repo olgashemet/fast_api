@@ -1,22 +1,23 @@
 import time
 from concurrent.futures.thread import ThreadPoolExecutor
+from typing import Any
 
 from devtools import debug
 
 
 class CountHandler:
-    def query_data(self):
+    def query_data(self) -> int:
         time.sleep(4)
         return 2579
 
 
 class DataHandler:
-    def query_data(self):
+    def query_data(self) -> list[dict[str, Any]]:
         time.sleep(8)
         return [{"sku": 2121}]
 
 
-def main():
+def main() -> None:
     with debug.timer("multitasking: threads") as timer:
         count_handler = CountHandler()
         data_handler = DataHandler()

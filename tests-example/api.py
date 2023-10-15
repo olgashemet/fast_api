@@ -11,11 +11,11 @@ app = FastAPI()
 def api_v1_get_data(
     *,
     n: Annotated[int, Path()],
-):
+) -> dict:
     dataobj = Data()
     return dataobj.get_data(n)
 
 
 @app.get("/")
-def api_v1_get_data():
+def handle_index() -> str:
     return "hello wrodlsadas"

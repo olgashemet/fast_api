@@ -9,7 +9,7 @@ from typing import TypeVar
 from devtools import debug
 from pydantic import BaseModel
 
-P = ParamSpec("P")
+P = ParamSpec("P")  # noqa: VNE001
 T = TypeVar("T")
 
 
@@ -23,7 +23,7 @@ def debug_timing(func: Callable[P, T]) -> Callable[P, T]:
         async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
             t0 = time.monotonic()
             try:
-                return await func(*args, **kwargs)
+                return await func(*args, **kwargs)  # type: ignore
             finally:
                 dt = time.monotonic() - t0
                 timing = f"{dt:.2f} s"
@@ -31,7 +31,10 @@ def debug_timing(func: Callable[P, T]) -> Callable[P, T]:
 
     else:
 
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        def wrapper(  # type: ignore  # redefenition of function above
+            *args: P.args,
+            **kwargs: P.kwargs,
+        ) -> T:
             t0 = time.monotonic()
             try:
                 return func(*args, **kwargs)
@@ -41,7 +44,7 @@ def debug_timing(func: Callable[P, T]) -> Callable[P, T]:
                 debug(timing, func, args, kwargs)
 
     wrapper = wraps(func)(wrapper)
-    return wrapper
+    return wrapper  # type: ignore  # otherwise will be very complex cast
 
 
 class Timing(BaseModel):
@@ -55,7 +58,7 @@ class JsonApiTimedPayloadMeta(BaseModel):
 
 
 class JsonApiTimedPayload(BaseModel):
-    data: T
+    data: T  # type: ignore  # unbound type
     meta: JsonApiTimedPayloadMeta
 
 
@@ -85,7 +88,7 @@ def equip_response_with_timing(
 
     else:
 
-        def wrapper(
+        def wrapper(  # type: ignore  # redefinition of function above
             *args: P.args,
             **kwargs: P.kwargs,
         ) -> JsonApiTimedPayload:
@@ -105,4 +108,4 @@ def equip_response_with_timing(
             )
 
     wrapper = wraps(func)(wrapper)
-    return wrapper
+    return wrapper  # type: ignore  # otherwise will be very complex cast

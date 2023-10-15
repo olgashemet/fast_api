@@ -7,4 +7,4 @@ class C:
     _x: int = field(alias="_x")
 
 
-c = C()
+obj = C()  # type: ignore

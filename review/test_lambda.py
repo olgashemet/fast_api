@@ -1,5 +1,15 @@
+from typing import Any
+
+from devtools import debug
+
+try:
+    from mcr_client import get_campaign_country  # type: ignore
+except ImportError:
+    debug(unknown_module="mcr_client")
+
+
 hex_values = "0123456789abcdef"
-input = "abc"
+input_value = "abc"
 data = [
     {
         "budget_spent": 5102.306640625,
@@ -83,31 +93,29 @@ data = [
         "planned_end_date": "2022-10-11",
     },
 ]
-result = {d: hex_values.index(d) for d in input}
+result = {d: hex_values.index(d) for d in input_value}
 
-print(data)
+debug(data)
 
 lst = [1, 3, 5]
 
-funct = lambda x, y: x + y
+funct = lambda x, y: x + y  # noqa: E731
 
 
 # map is in order applied to each element
 # is map a function ?
-b = map(int, ["1", "2"])
-for x in b:
-    print(type(x))
+ints = map(int, ["1", "2"])
+for item in ints:
+    debug(type(item))
 
 lst = [1, 2, 3, 4]
-new_lst = lambda x: x if x > 1 else None
+new_lst = lambda x: x if x > 1 else None  # noqa: E731
 
-lst_new = map(lambda x: x if x > 1 else None, lst)
+lst_new = map(lambda x: x if x > 1 else None, lst)  # noqa: C417
 # why i do not see  list ??? in the print(list(lst_new))
 # i want to do without else  as i want to get [ 3, 5]
-print(list(lst_new))
+debug(list(lst_new))
 
-
-from mcr_client import get_campaign_country
 
 country = {
     "n_code": "N1030995",
@@ -177,26 +185,22 @@ country = {
 }
 
 
-def get_country_data_v2(data, kpi, sort):
-    print("kpi", "sort")
-    print(kpi)
-    print(sort)
-    print(data)
+def get_country_data_v2(data: Any, kpi: Any, sort: str) -> dict:
+    debug(data, kpi, sort)
 
-    # Using the max() function with a custom key to find the dictionary with the highest pdp_views
+    # Using the max() function with a custom key
+    # to find the dictionary with the highest pdp_views
     if sort == "max":
         item_with_extremum_kpi = max(data, key=lambda x: x.get(kpi, 0))
     elif sort == "min":
-        print("min")
-        print(data)
         item_with_extremum_kpi = min(data, key=lambda x: x.get(kpi, 0))
-        print(item_with_extremum_kpi.get("n_code"))
+        debug(sort, data, item_with_extremum_kpi.get("n_code"))
 
     n_code = item_with_extremum_kpi.get("n_code")
     country_data = get_campaign_country(n_code)["country_data"]
     country_data.sort(key=lambda x: x[kpi] if sort == "min" else -1 * x[kpi])
 
-    def sort_my_data(kpi, direction="min"):
+    def sort_my_data(kpi: dict, direction: str = "min") -> list:
         return sorted(
             country_data,
             key=lambda x: x[kpi],
@@ -205,22 +209,32 @@ def get_country_data_v2(data, kpi, sort):
 
     sort_my_data(data, "budget")
 
-    print("sorted data")
-    print(country_data)
-    countires = [{"country": d["country"], kpi: d[kpi]} for d in country_data]
+    debug(**{"sorted data": country_data})
+    # countires = [
+    #     {
+    #         "country": d["country"],
+    #         kpi: d[kpi],
+    #     }
+    #     for d in country_data
+    # ]
 
-    compact_list = list(map(lambda x: f'{x["country"]}- {x[kpi]}', countires))
+    compact_list = [f'{x["country"]}- {x[kpi]}' for x in country_data]
     [d["campaign_name"] for d in data][0]
     return {
         "format": "str_list",
         "data": [
             {
                 "type": "string",
-                "content": f'here are your {"top" if sort == "max" else "last" } markets sorted by {kpi}',
+                "content": (
+                    "here are your "
+                    f'{"top" if sort == "max" else "last" }'
+                    f" markets sorted by {kpi}"
+                ),
             },
             {"type": "array", "content": compact_list},
         ],
     }
 
-    # Returning the campaign_name from the dictionary with the highest pdp_views
-    return countires
+    # Returning the campaign_name
+    # from the dictionary with the highest pdp_views
+    # return countires

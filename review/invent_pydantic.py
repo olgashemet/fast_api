@@ -28,5 +28,5 @@ class User(DTO):
     phone: str
 
 
-a = User(name="n", phone="p", x=123)
-debug(a.name, a.phone)
+user = User(name="n", phone="p", x=123)  # type: ignore
+debug(user.name, user.phone)

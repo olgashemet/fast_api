@@ -174,7 +174,7 @@ class UniDirectionalLinkedList:
             return NotImplemented
         return self._to_list() == another
 
-    def split_linked_list(self) -> None:
+    def split_linked_list(self) -> tuple:
         current = self._head
         list_1 = []
         list_2 = []
@@ -191,20 +191,21 @@ class UniDirectionalLinkedList:
 
     def split_linked_list_into_linked_list(self) -> None:
         current = self._head
-        evenStart = None
-        evenEnd = None
+        even_start = None
+        even_end = None
         if not current:
             raise ValueError("empty list")
         else:
             while current:
                 if current.value % 2 == 0:
-                    if evenStart == None:
-                        evenStart = current
-                        evenEnd = evenStart
+                    if even_start is None:
+                        even_start = current
+                        even_end = even_start
                     else:
-                        evenEnd.next = current
+                        assert even_end is not None
+                        even_end.next = current
                         # delem odin sdvig v pravo
-                        evenEnd = evenEnd.next
+                        even_end = even_end.next
 
                 current = current.next
 

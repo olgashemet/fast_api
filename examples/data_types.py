@@ -19,7 +19,12 @@ def useful_function() -> Data:
     return Data(campaign_data, phone, age)
 
 
-class get_overview_data:
+def get_division(arg1: str, arg2: str) -> float:
+    debug(arg1, arg2)
+    return 1.0
+
+
+class get_overview_data:  # noqa: N801
     @property
     def ccpi(self) -> float:
         return get_division("fdsfs", "fdsfs") * 100
@@ -32,12 +37,12 @@ class get_overview_data:
 # ======================================
 
 
-def existing_endpoint():
-    x = useful_function()
-    debug(x.phone)
+def existing_endpoint() -> None:
+    value = useful_function()
+    debug(value.phone)
 
 
-def api_endpoint():
+def api_endpoint() -> None:
     resp1 = useful_function()
     debug(resp1.phone)
 
