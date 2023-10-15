@@ -10,60 +10,62 @@ version = "0.1.0"
 [[tool.poetry.source]]
 name = "pypi-explicit"
 url = "https://pypi.org/simple/"
-default = true
+priority = "default"
 
 
 [tool.poetry.dependencies]
-aiohttp = "^3.8.4"
-anyio = "^3.6.2"
-attrs = "^22.2.0"
-fastapi = "^0.92.0"
-greenlet = "^2.0.2"
-httpx = "^0.23.3"
-orjson = "^3.8.7"
-pendulum = "^2.1.2"
-pip = "^23.0.1"
-pydantic = "^1.10.5"
+asyncpg = "0.28.0"
+attrs = "23.1.0"
+cython = "3.0.3"
+devtools = {extras = ["pygments"], version = "0.12.2"}
+fastapi = "0.103.2"
+httpx = {extras = ["brotli"], version = "0.25.0"}
+orjson = "3.9.9"
+pandas = "2.1.1"
+pendulum = "2.1.2"
+psycopg2-binary = "2.9.9"
+pydantic = "2.4.2"
+pydantic-settings = "2.0.3"
 python = "3.10.10"
-python-dotenv = "^1.0.0"
-requests = "^2.28.2"
-uvicorn = "^0.20.0"
-watchfiles = "^0.18.1"
+python-dotenv = "1.0.0"
+sqlalchemy = {extras = ["asyncio"], version = "2.0.22"}
+tenacity = "8.2.3"
+uvicorn = {extras = ["standard"], version = "0.23.2"}
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-coverage = "^7.2.1"
-devtools = "^0.10.0"
-dlint = "^0.14.0"
-flake8 = "^6.0.0"
-flake8-annotations-complexity = "^0.0.7"
-flake8-bandit = "^4.1.1"
-flake8-black = "^0.3.6"
-flake8-bugbear = "^23.2.13"
-flake8-builtins = "^2.1.0"
-flake8-cognitive-complexity = "^0.1.0"
-flake8-comprehensions = "^3.10.1"
-flake8-debugger = "^4.1.2"
-flake8-executable = "^2.1.3"
-flake8-expression-complexity = "^0.0.11"
-flake8-fixme = "^1.1.1"
-flake8-isort = "^6.0.0"
-flake8-multiline-containers = "^0.0.19"
-flake8-mutable = "^1.2.0"
-flake8-pep3101 = "^2.0.0"
-flake8-print = "^5.0.0"
-flake8-printf-formatting = "^1.1.2"
-flake8-simplify = "^0.19.3"
-flake8-variables-names = "^0.0.5"
-httpie = "^3.2.1"
-ipython = "^8.11.0"
-isort = "^5.12.0"
-mypy = "^1.0.1"
-pep8-naming = "^0.13.3"
-pytest = "^7.2.2"
-pytest-cov = "^4.0.0"
-types-requests = "^2.28.11.15"
+autoflake = "2.2.1"
+black = "23.9.1"
+coverage = {extras = ["toml"], version = "7.3.2"}
+dlint = "0.14.1"
+flake8 = "6.1.0"
+flake8-annotations-complexity = "0.0.8"
+flake8-bandit = "4.1.1"
+flake8-black = "0.3.6"
+flake8-bugbear = "23.9.16"
+flake8-builtins = "2.1.0"
+flake8-cognitive-complexity = "0.1.0"
+flake8-comprehensions = "3.14.0"
+flake8-debugger = "4.1.2"
+flake8-executable = "2.1.3"
+flake8-expression-complexity = "0.0.11"
+flake8-fixme = "1.1.1"
+flake8-isort = "6.1.0"
+flake8-multiline-containers = "0.0.19"
+flake8-mutable = "1.2.0"
+flake8-pep3101 = "2.0.0"
+flake8-print = "5.0.0"
+flake8-printf-formatting = "1.1.2"
+flake8-simplify = "0.21.0"
+flake8-variables-names = "0.0.6"
+freezegun = "1.2.2"
+isort = "5.12.0"
+mypy = "1.6.0"
+pandas-stubs = "2.1.1.230928"
+pep8-naming = "0.13.3"
+pytest = "7.4.2"
+pytest-asyncio = "0.21.1"
+pytest-cov = "4.1.0"
 
 
 [build-system]
@@ -134,12 +136,11 @@ warn_unused_ignores = true
 
 
 [tool.pytest.ini_options]
-#addopts = "--cov --cov-branch --no-cov-on-fail --cov-fail-under=90"
 cache_dir = ".local/pytest/"
 console_output_style = "count"
-filterwarnings = [
-    "ignore::DeprecationWarning",
-]
+# filterwarnings = [
+#     "ignore::DeprecationWarning",
+# ]
 testpaths = [
     ".",
 ]

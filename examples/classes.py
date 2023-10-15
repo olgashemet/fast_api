@@ -1,3 +1,5 @@
+from devtools import debug
+
 # def func(arg1: float, arg2: float) -> float:
 #     return arg1 / arg2
 #
@@ -42,8 +44,8 @@ class Cat:
         self.name = name
         self.age = age
 
-    def meow(self):
-        print(f"Кот {self.name} ({self.age} лет) мяукает")
+    def meow(self) -> None:
+        debug(meow=f"Кот {self.name} ({self.age} лет) мяукает")
 
 
 class Dog:
@@ -57,5 +59,5 @@ joy = Cat("Джой", 15)
 joy.meow()
 
 
-print(joy.name)
-joy.name = 1
+debug(joy.name)
+joy.name = 1  # type: ignore  # some experiments

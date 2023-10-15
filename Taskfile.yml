@@ -4,13 +4,28 @@ output: 'prefixed'
 
 tasks:
   code-format:
+    aliases:
+      - f
     cmds:
+      - > 
+         poetry run autoflake
+         --exclude '*.local*'
+         --expand-star-imports
+         --in-place
+         --recursive
+         --remove-all-unused-imports
+         --remove-duplicate-keys
+         --remove-unused-variables
+         --verbose
+         .
       - poetry run black .
       - poetry run isort --virtual-env="{{.DIR_VENV}}" .
-    desc: formats code using black & isort
-    dir: "{{.USER_WORKING_DIR}}"
+    desc: formats code using autoflake & black & isort
+    dir: "{{.ROOT_DIR}}"
 
   code-lint:
+    aliases:
+      - l
     cmds:
       - test -f "{{.DIR_LOCAL}}/ok.code-lint-black"
       - test -f "{{.DIR_LOCAL}}/ok.code-lint-flake8"
@@ -23,25 +38,15 @@ tasks:
       - code-lint-mypy
       - code-lint-flake8
     desc: checks code against linters
-    dir: "{{.USER_WORKING_DIR}}"
-
-#  run-tests-coverage:
-#    cmds:
-#      - poetry run coverage html
-#    deps:
-#      - task: run-tests
-#        vars: { CLI_ARGS: "{{.CLI_ARGS}} --cov-fail-under=0" }
-#    desc: run tests with coverage
-#    dir: "{{.ROOT_DIR}}"
-#    generates:
-#      - "{{.DIR_LOCAL}}/coverage/html/**/*"
-#    run: once
+    dir: "{{.ROOT_DIR}}"
 
   run-tests:
+    aliases:
+      - t
     cmds:
       - poetry run pytest {{.CLI_ARGS}} .
     desc: runs tests
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.ROOT_DIR}}"
     run: once
 
   code-lint-black:
@@ -50,7 +55,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run black --check .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.ROOT_DIR}}"
     ignore_error: true
     internal: true
   code-lint-isort:
@@ -59,7 +64,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.ROOT_DIR}}"
     ignore_error: true
     internal: true
   code-lint-mypy:
@@ -68,7 +73,7 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.ROOT_DIR}}"
     ignore_error: true
     internal: true
   code-lint-flake8:
@@ -77,17 +82,19 @@ tasks:
         rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
         && poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
         && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
-    dir: "{{.USER_WORKING_DIR}}"
+    dir: "{{.ROOT_DIR}}"
     ignore_error: true
     internal: true
 
   build-task-github:
     cmds:
       - >
-        docker run --rm -it
-        -v $(pwd):/app/:rw
-        -e GOBIN=/app/.github/bin
-        golang:bullseye@sha256:a0b51fe882f269828b63e7f69e6925f85afc548cf7cf967ecbfbcce6afe6f235
+        docker run
+        --rm -it
+        --env GOBIN=/app/.github/bin
+        --platform linux/amd64
+        --volume $(pwd):/app/:rw
+        golang:1.21.1-alpine3.18
         go install github.com/go-task/task/v3/cmd/task@latest
     desc: builds Task binary for Ubuntu / Github Actions
     dir: "{{.ROOT_DIR}}"
@@ -99,7 +106,7 @@ tasks:
     desc: Installs Poetry to the current Python environment.
     dir: "{{.ROOT_DIR}}"
 
-  default:
+  setup-toolchain:
     cmds:
       - pyenv install --skip-existing "{{.PYTHON_VERSION}}"
       - task: install-poetry
@@ -111,7 +118,7 @@ tasks:
       - echo "DIR_LOCAL={{.DIR_LOCAL}}"
       - echo "PYTHON_VERSION={{.PYTHON_VERSION}}"
       - echo "POETRY_VERSION={{.POETRY_VERSION}}"
-    desc: bootstraps local dev environment
+    desc: sets up local dev environment and tools
     dir: "{{.ROOT_DIR}}"
 
 vars:

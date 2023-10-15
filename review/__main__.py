@@ -1,5 +1,5 @@
 import keyword
-import re
+from typing import Any
 
 from devtools import debug
 
@@ -41,36 +41,36 @@ assert not is_identifier("for")
 assert not is_identifier("while")
 
 
-e = 1
+EEE = 1
 
 
-def f(x, y, *, z):
-    a = x + y + z + e
+def f(x: float, y: float, *, z: float) -> float:  # noqa: VNE001
+    result = x + y + z + EEE
 
     debug("NAMESPACE:FUNCTION - GLOBALS", globals())
     debug("NAMESPACE:FUNCTION - LOCALS", locals())
 
-    return a
+    return result
 
 
 debug("NAMESPACE:MODULE - GLOBALS", globals())
 debug("NAMESPACE:MODULE - LOCALS", locals())
 
-x = 1000
+some_x = 1000
 debug("Function Result", f(1, 2, z=3))
 
 
 class Cat:
     name = "fsfds"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.a = 10
 
         # ...
         debug("NAMESPACE - INSTANCE", self.__dict__)
 
-    def count(self):
-        b = 10  # self.a+1
+    def count(self) -> int:
+        num = 10  # self.a+1
 
         debug("NAMESPACE:Class - function", locals())
 
@@ -78,16 +78,16 @@ class Cat:
         # debug("NAMESPACE - INSTANCE", self.__dict__)
         # ...
 
-        return b
+        return num
 
     debug("NAMESPACE:Class", locals())
-    print("kekekeke", 1 + 2)
+    debug("kekekeke", 1 + 2)
 
 
 undef = "<undefined>"
 
 
-def getattr_safe(smth, attr):
+def getattr_safe(smth: object, attr: str) -> Any:
     try:
         return getattr(smth, attr)
     except AttributeError:

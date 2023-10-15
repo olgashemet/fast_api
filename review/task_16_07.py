@@ -1,5 +1,3 @@
-from devtools import debug
-
 """
 hex: 0123456789abcdef
 
@@ -25,7 +23,7 @@ def xxx(hex_value: str) -> int:
     )
 
 
-def xxx(input_value: str) -> int:
+def xxx(input_value: str) -> int:  # type: ignore  # noqa: F811
     sum_result = 0
     for i in range(len(input_value), 0, -1):
         hex_digit = input_value[i - 1].lower()
@@ -40,30 +38,31 @@ raise SystemExit(0)
 
 # tests
 
-interface = input("what interface you prefer? 1..4 : ")
-hex_value = "A0BCc"
-int_value = int(hex_value, 16)
+# interface = input("what interface you prefer? 1..4 : ")
+# hex_value = "A0BCc"
+# int_value = int(hex_value, 16)
 
-if interface == "1":
-    # option 1. simple function
-    assert xxx(hex_value) == int_value, f"{xxx(hex_value)!r} != {int_value!r}"
+# if interface == "1":
+#     # option 1. simple function
+#     err = f"{xxx(hex_value)!r} != {int_value!r}"
+#     assert xxx(hex_value) == int_value, err
 
-elif interface == "2":
-    # option 2. class-service
-    xxx = XXX()
-    assert xxx.convert(hex_value) == int_value
+# elif interface == "2":
+#     # option 2. class-service
+#     xxx = XXX()  # noqa:T102,F821
+#     assert xxx.convert(hex_value) == int_value
 
-elif interface == "3":
-    # option 3. class
-    xxx = XXX(hex_value)
-    assert xxx.value == hex_value
-    assert xxx.to_int() == int_value
+# elif interface == "3":
+#     # option 3. class
+#     xxx = XXX(hex_value)  # noqa: T102,F821
+#     assert xxx.value == hex_value
+#     assert xxx.to_int() == int_value
 
-elif interface == "4":
-    # option 4. class-usecase
-    xxx = XXX(hex_value)
-    assert xxx.value == hex_value
-    assert xxx() == int_value
+# elif interface == "4":
+#     # option 4. class-usecase
+#     xxx = XXX(hex_value)  # noqa: T102,F821
+#     assert xxx.value == hex_value
+#     assert xxx() == int_value
 
-else:
-    raise RuntimeError("please set interface: 1 .. 4")
+# else:
+#     raise RuntimeError("please set interface: 1 .. 4")

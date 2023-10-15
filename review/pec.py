@@ -1,28 +1,31 @@
-from typing import Any
+from devtools import debug
 
 
 class Cat:
     age = "3"
 
-    def __init__(self):
+    def __init__(self) -> None:
         # self.age=5
 
-        print("cat is created")
+        debug("cat is created")
 
-    def set_name(self, name):
+    def set_name(self, name: str) -> None:
         self.name = name
 
-    def __str__(self):
-        print(self.__dict__)
+    def __str__(self) -> str:
+        debug(self.__dict__)
         return f"it is a {self.__class__.__name__} {self.name}"
 
 
 cat = Cat()
-print(cat.__dict__)
+debug(cat.__dict__)
 cat.set_name("Meya")
-print(cat)
-##represents a dictionary or any mapping object that is used to store the attributes of the object. Why not age ?
-print(cat.__dict__)
+debug(cat)
+# represents a dictionary
+# or any mapping object
+# that is used to store the attributes of the object.
+# Why not age ?
+debug(cat.__dict__)
 
 
 # cat.change_name='Murka'
